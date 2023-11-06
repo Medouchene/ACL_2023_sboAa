@@ -1,5 +1,6 @@
 package GamePack;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -7,6 +8,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class GamePanel {
@@ -47,6 +51,19 @@ class LectureCommand extends JPanel  {
 	  private int newPointX = (int) (r*(p.largeur-20));
 	  private int newPointY = (int) (r1*(p.longueur-20));
 	  
+	  private BufferedImage heroImage;
+	  private BufferedImage murImage;
+	  private BufferedImage solImage;
+	    public LectureCommand() {
+	        try {
+	            heroImage = ImageIO.read(new File("/home/ouchene/Bureau/GIT/mon_projet/ACL_2023_sboAa/Documents/images/hero.png"));
+	            murImage = ImageIO.read(new File("/home/ouchene/Bureau/GIT/mon_projet/ACL_2023_sboAa/Documents/images/mur.jpg"));
+	            solImage = ImageIO.read(new File("/home/ouchene/Bureau/GIT/mon_projet/ACL_2023_sboAa/Documents/images/sol.jpg"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	  
 	  public void movePoint(int keyCode) {
 	        int stepSize = 10; // c la vitesse de controle
 	        int pointX = newPointX;
@@ -60,7 +77,7 @@ class LectureCommand extends JPanel  {
 	        } else if (keyCode == KeyEvent.VK_DOWN) {
 	            pointY += stepSize;
 	        }
-	        if ((pointX<=maxX-10 && pointX>=minX) && (pointY<=maxY-10 && pointY>=minY) ) {
+	        if ((pointX<=maxX-30 && pointX>=minX) && (pointY<=maxY-20 && pointY>=minY+10) ) {
 		        
 	        	if (!checkObs(pointX, pointY)) {
 	        		newPointX=pointX;
@@ -89,32 +106,49 @@ class LectureCommand extends JPanel  {
 	      int obstacle3Width = 20;
 	      int obstacle3Height = 20;
 
-	      if ((x + 10 >= obstacle1X && x <= obstacle1X + obstacle1Width && y + 10 >= obstacle1Y && y <= obstacle1Y + obstacle1Height) ||
-	          (x + 10 >= obstacle2X && x <= obstacle2X + obstacle2Width && y + 10 >= obstacle2Y && y <= obstacle2Y + obstacle2Height) ||
-	          (x + 10 >= obstacle3X && x <= obstacle3X + obstacle3Width && y + 10 >= obstacle3Y && y <= obstacle3Y + obstacle3Height)) {
+	      if ((x + 30 >= obstacle1X && x <= obstacle1X + obstacle1Width && y + 30 >= obstacle1Y && y <= obstacle1Y + obstacle1Height) ||
+	          (x + 30 >= obstacle2X && x <= obstacle2X + obstacle2Width && y + 30 >= obstacle2Y && y <= obstacle2Y + obstacle2Height) ||
+	          (x + 30 >= obstacle3X && x <= obstacle3X + obstacle3Width && y + 30 >= obstacle3Y && y <= obstacle3Y + obstacle3Height)) {
 	          return true; 
 	      }
 
 	      return false; 
 	  }
+	  
+	
 	  protected void paintComponent(Graphics g) {
 	        super.paintComponent(g);
-	        
-	        //dessiner les murs
-	        g.setColor(Color.gray);
-	        g.fillRect(minX, minY, minX+10, maxY);
-	        g.fillRect(minX, minY, maxX, minY+10);
-	        g.fillRect(maxX, minY, minX+10, maxY+10);
-	        g.fillRect(minX, maxY, maxX+10, minY+10);
-	        
-	        //dessiner les obstacles
-	        
-	        g.fillRect((maxX/2)+50, maxY-60, 40, 40); //obs 1 
-	        g.fillRect((maxX/2)-50, maxY/2, 30, 30); //obs 2
-	        g.fillRect((maxX/2)+50, (maxY/2)-100, 20, 20); //obs 3
-	        
-	        //dessiner la boule
-	        g.setColor(Color.BLUE);
-	        g.fillOval(newPointX, newPointY, 10, 10);
+
+	        // Dessiner les murs
+	      // g.setColor(Color.gray);
+	       
+	       /* g.fillRect(minX, minY, minX + 10, maxY);
+	        g.fillRect(minX, minY, maxX, minY + 10);
+	        g.fillRect(maxX, minY, minX + 10, maxY + 10);
+	        g.fillRect(minX, maxY, maxX + 10, minY + 10);
+	        */
+	     
+	       g.drawImage(murImage, minX, minY, maxX - minX, 10, null);
+	       g.drawImage(murImage, minX, minY, 10, maxY - minY, null);
+	       g.drawImage(murImage, maxX, minY, minX+10, maxY + 10, null);
+	       g.drawImage(murImage, minX, maxY, maxX + 10, minY + 10, null);
+
+	        // Dessiner le sol
+	        g.drawImage(solImage, minX+10, minY+10, maxX - minX - 10 , maxY - minY- 10, null);
+
+
+	        // Dessiner les obstacles
+	     /*   g.fillRect((maxX / 2) + 50, maxY - 60, 40, 40); // obs 1
+	        g.fillRect((maxX / 2) - 50, maxY / 2, 30, 30); // obs 2
+	        g.fillRect((maxX / 2) + 50, (maxY / 2) - 100, 20, 20); // obs 3
+	        */
+	        g.drawImage(murImage, (maxX / 2) + 50, maxY - 60, 40, 40, null);
+	        g.drawImage(murImage, (maxX / 2) - 50, maxY / 2, 30, 30, null);
+	        g.drawImage(murImage, (maxX / 2) + 50, (maxY / 2) - 100, 20, 20, null);
+
+	        // Dessiner le héros (image "hero.png")
+	        if (heroImage != null) {
+	            g.drawImage(heroImage, newPointX, newPointY, 30 , 30, null);
+	        }
 	    }
 }
