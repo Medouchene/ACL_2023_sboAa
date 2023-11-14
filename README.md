@@ -1,11 +1,12 @@
 # ACL_2023_sboAa
 
+## Equipe :
 
-Med Ouchene
++ Med Ouchene
++ Hajar Arbaoui
++ Aurélien Mnl
++ Omar Guen
 
-Hajar Arbaoui
+## Description du Jeu :
 
-Aurélien Mnl
-
-Omar Guen
-
+Le jeu propose une aventure où le joueur doit guider un personnage à travers un labyrinthe pour découvrir un trésor. Cependant, des monstres de différents types errent dans le labyrinthe, essayant d'attaquer le personnage.
