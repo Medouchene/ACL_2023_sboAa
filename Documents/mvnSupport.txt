@@ -1,3 +1,5 @@
 mvn clean
 
 mvn test
+
+mvn clean install
