@@ -5,12 +5,16 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import entity.Player;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
+	
+	//niveau
+	public String niveau = JOptionPane.showInputDialog(null, "Veuillez saisir un niveau (1,2,3) : ");
 
 	//SCREEN SETTINGS
 	final int originalTileSize = 16; // 16x16 tile

@@ -25,9 +25,16 @@ public class TileManager {
 		//instantiate mapTileNum
 		mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
 		
-		
 		getTileImage();
-		loadMap("/maps/map01.txt");
+		
+		//niveaux
+		if (gp.niveau.equals("1")) {
+			loadMap("/maps/map01.txt");
+		}else if (gp.niveau.equals("2")) {
+			loadMap("/maps/map02.txt");
+		}else if (gp.niveau.equals("3")) {
+			loadMap("/maps/map03.txt");
+		}
 	}
 	
 	public void getTileImage() {
