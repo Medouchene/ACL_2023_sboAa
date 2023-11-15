@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -15,6 +16,7 @@ public class Player extends Entity{
 
 	GamePanel gp;
 	KeyHandler keyH;
+	Random random = new Random();
 	
 	//constructor
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -35,13 +37,27 @@ public class Player extends Entity{
 	}
 	
 	public void setDefaultValues() {
-		
-		x = 100;
-		y = 100;
-		speed = 4; //ie 4 pixels
-		direction = "down"; //set a default direction
+	    // Répétez la génération de valeurs jusqu'à ce qu'il n'y ait pas de collision
+	    do {
+	        x = random.nextInt(500);
+	        y = random.nextInt(500);
+	    } while (checkCollision()); // Continuez à générer de nouvelles positions jusqu'à ce qu'il n'y ait pas de collision
+
+	    speed = 4; //ie 4 pixels
+	    direction = "down"; //set a default direction
+	}
+	//fct auxiliare
+	private boolean checkCollision() {
+	   
+		collisionOn = false;
+	   if (collisionOn ==  true) {
+		   return true;
+	   }
+	   return collisionOn;
+	   
 	}
 	
+
 	public void getPlayerImage() {
 		try {
 			

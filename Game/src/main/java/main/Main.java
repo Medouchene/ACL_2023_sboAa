@@ -10,7 +10,7 @@ public class Main {
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//this lets the window properly close when user clicks the close "x" button
 		window.setResizable(false); //so we cannot resize this window
-		window.setTitle("2D Adventure");
+		window.setTitle("Labyrinthe sboAa");
 		
 		//add the GamePanel to this window
 		GamePanel gamePanel = new GamePanel();

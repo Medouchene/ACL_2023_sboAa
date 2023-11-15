@@ -3,7 +3,6 @@
   <groupId>Labyrinthe</groupId>
   <artifactId>Labyrinthe</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-   <!-- Java version configuration -->
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -18,7 +17,6 @@
         <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
             <plugin>
-                <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
