@@ -93,6 +93,9 @@ public class TileManager {
 					int num = Integer.parseInt(numbers[col]); // use col as an index for numbers[] array
 					//We store the extracted number int the mapTileNum[][]
 					mapTileNum[col][row] = num;
+					System.out.print("mapTilenum x est " + col);
+					System.out.print("mapTilenum y est " + row);
+					System.out.println("mapTilenum est " + mapTileNum[col][row]);
 					//continue this until everything in the numbers[] is stored int the mapTileNum[][]
 					col++;
 				}

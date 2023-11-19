@@ -38,23 +38,12 @@ public class Player extends Entity{
 	
 	public void setDefaultValues() {
 	    // Répétez la génération de valeurs jusqu'à ce qu'il n'y ait pas de collision
-	    do {
-	        x = random.nextInt(500);
-	        y = random.nextInt(500);
-	    } while (checkCollision()); // Continuez à générer de nouvelles positions jusqu'à ce qu'il n'y ait pas de collision
-
+		x = gp.setValues().get(0);
+		y = gp.setValues().get(1);
+		System.out.print("   x est " + x);
+		System.out.print("   y est " + y);
 	    speed = 4; //ie 4 pixels
 	    direction = "down"; //set a default direction
-	}
-	//fct auxiliare
-	private boolean checkCollision() {
-	   
-		collisionOn = false;
-	   if (collisionOn ==  true) {
-		   return true;
-	   }
-	   return collisionOn;
-	   
 	}
 	
 
@@ -108,6 +97,8 @@ public class Player extends Entity{
 				case "left": x -= speed; break;
 				case "right": x += speed; break;
 				}
+				System.out.printf("   x act est " + x/48);
+				System.out.printf("   y act est " + y/48);
 			}
 			
 			//create a simple sprite changer

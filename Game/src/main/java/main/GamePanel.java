@@ -1,10 +1,19 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Random;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,7 +24,8 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//niveau
 	public String niveau = JOptionPane.showInputDialog(null, "Veuillez saisir un niveau (1,2,3) : ");
-
+	private JButton resetButton;
+	
 	//SCREEN SETTINGS
 	final int originalTileSize = 16; // 16x16 tile
 	final int scale = 3;
@@ -25,7 +35,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int maxScreenCol = 16;
 	public final int maxScreenRow = 12 ;
 	public final int screenWidth = tileSize * maxScreenCol;//768 pixels
-	public final int screenHeight = tileSize * maxScreenRow;//576 pixels
+	public final int screenHeight = tileSize *( maxScreenRow+1);//576 pixels
+	
+	
+	Random random = new Random();
 	
 	//FPS 
 	int FPS = 60;
@@ -59,6 +72,22 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);//if set true, all the drawing from this component will be done in an offscreen painting buffer
 		this.addKeyListener(keyH);//add the keyH into the GamePanel --> this GamePanel can recognize key input
 		this.setFocusable(true);//with this, this GamePanel can be 'focused' to receive key input
+		 resetButton = new JButton("Reset Game");
+	        resetButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                // Handle the button click event
+	                resetGame();
+	            }
+	        });
+	        resetButton.setBackground(Color.BLUE); 
+	        resetButton.setPreferredSize(new Dimension(3*tileSize, tileSize));
+	        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+	        // Add the components to the panel
+	        add(Box.createVerticalGlue()); // Add some space at the top
+	        add(resetButton);
+	        
 		
 	}
 
@@ -69,9 +98,24 @@ public class GamePanel extends JPanel implements Runnable{
 		//so basically we are passing GamePanel class to this thread's constructor that's how you instantiate a thread
 		gameThread.start(); //it's gonna automatically call this run method
 	}
+	 private void resetGame() {
+	        // Reset any game-related variables or objects here
+	        // For example, you might reset the player's position, scores, etc.
+	        // You may also need to restart the game thread if applicable.
+
+	        // Example: Reset player position
+	        player.setDefaultValues();
+
+	        // Example: Restart the game thread
+	        if (gameThread != null && !gameThread.isAlive()) {
+	            startGameThread();
+	        }
+
+	        // Request focus for key input
+	        this.requestFocus();
+	    }
 	
 	
-	@Override
 	//when we start this gameThread it automatically calls this run method
 //"SLEEP" METHOD	
 //	public void run() {
@@ -114,7 +158,15 @@ public class GamePanel extends JPanel implements Runnable{
 //		}
 //		
 //	}
-	
+	/*public Integer getX0() {
+		int x0 ; int y0;
+		do{
+			x0 = random.nextInt(500);
+			y0 = random.nextInt(500);
+		} while(tileM.mapTileNum[x0][y0] != 0);
+		List<Integer> l = new ArrayList<>();
+		return x0, y0;
+	}*/
 //"DELTA/ACCUMILATOR" METHOD	
 	public void run() {
 		
@@ -150,6 +202,19 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			
 		}
+	}
+	public ArrayList<Integer> setValues(){
+		int x0; int y0;
+		ArrayList<Integer> l = new ArrayList<>();
+		do {
+			x0 = random.nextInt(this.maxScreenCol);
+			y0 = random.nextInt(this.maxScreenRow);
+			System.out.println("encore " + tileM.mapTileNum[x0][y0]);
+		}while(tileM.mapTileNum[x0][y0] != 0);
+		l.add(x0*this.tileSize);
+		l.add(y0*this.tileSize);
+		return l;
+	
 	}
 	
 	public void update() {

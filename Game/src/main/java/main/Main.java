@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 public class Main {
@@ -14,7 +16,8 @@ public class Main {
 		
 		//add the GamePanel to this window
 		GamePanel gamePanel = new GamePanel();
-		window.add(gamePanel);
+		window.setLayout(new BorderLayout());
+		window.add(gamePanel,BorderLayout.SOUTH);
 		
 		window.pack();//cause this window to be sized to fit the preferred size and layouts of its subcomponents (=GamePanel)
 		
