@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -10,18 +11,23 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
+import tile.TileManager;
 
 public class Player extends Entity{
 
 	GamePanel gp;
 	KeyHandler keyH;
 	
+	//Jauge de vie
+	private int vie ;
+	private final int MAX_VIE=500;
+	
 	//constructor
-	public Player(GamePanel gp, KeyHandler keyH) {
+	public Player(GamePanel gp, KeyHandler keyH, TileManager tileManager) {
 		
 		this.gp = gp;
 		this.keyH = keyH;
-		
+		this.vie=MAX_VIE;
 		
 		//instantiate solidArea
 		solidArea = new Rectangle();
@@ -30,29 +36,44 @@ public class Player extends Entity{
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
-		setDefaultValues();
+		setDefaultValues(tileManager);
 		getPlayerImage();
 	}
 	
-	public void setDefaultValues() {
-		
-		x = 100;
-		y = 100;
-		speed = 4; //ie 4 pixels
-		direction = "down"; //set a default direction
+	public void setDefaultValues(TileManager tileManager) {
+	    int mapWidth = tileManager.mapTileNum.length;
+	    int mapHeight = tileManager.mapTileNum[0].length;
+	    boolean foundEmptySpace = false;
+
+	    while (!foundEmptySpace) {
+	        int randomX = (int) (Math.random() * mapWidth);
+	        int randomY = (int) (Math.random() * mapHeight);
+
+	        // Vérifier si la case aléatoire est un espace vide (sans collision)
+	        if (!tileManager.tile[tileManager.mapTileNum[randomX][randomY]].collision) {
+	            x = randomX * gp.tileSize;
+	            y = randomY * gp.tileSize;
+	            foundEmptySpace = true;
+	        }
+	    }
+
+	    speed = 4;
+	    direction = "down";
 	}
+
+	
 	
 	public void getPlayerImage() {
 		try {
 			
-			up1  = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+			up1  = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -105,7 +126,21 @@ public class Player extends Entity{
 				spriteCounter = 0;//reseat
 			}
 		}
+		
+	//Jauge de vie
+		if (collisionOn) {
+			double reduction = 0.1 ;
+			double redutctionAmount = (MAX_VIE*reduction)/100.0;
+			vie-=redutctionAmount;
+		}
+		if (vie<=0) {
+			//GAME OVER
+		}
 	}
+	
+	
+	
+	
 	public void draw(Graphics2D g2) {
 		
 //		g2.setColor(Color.white);
@@ -149,5 +184,19 @@ public class Player extends Entity{
 		}
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);//Draw an image on the screen
 		
+		//Dessiner la jauge de vie
+		 int healthBarWidth = (int) ((double) vie / MAX_VIE * 100); // Largeur de la barre de vie proportionnelle à la vie restante
+
+		 g2.setColor(Color.BLACK);
+		 g2.fillRoundRect(10, 10, 100, 20, 10, 10); // Rectangle arrondi pour la barre de vie
+
+		    // Dessiner le dégradé pour la jauge de vie
+		 GradientPaint gradient = new GradientPaint(0, 0, Color.RED, healthBarWidth, 0, Color.GREEN); 
+		 g2.setPaint(gradient);
+		 g2.fillRoundRect(12, 12, healthBarWidth - 4, 16, 8, 8); //
+		
 	}
+	
+
+	
 }

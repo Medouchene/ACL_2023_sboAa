@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	
 	//instantiate Player class
-	Player player = new Player(this,keyH); //pass this GamePanel class and KeyHandler
+	Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
 	
 /*	On en a plus besoin car on la defini dans la class Player
 	//Set player's default position
@@ -171,6 +171,7 @@ public class GamePanel extends JPanel implements Runnable{
 		tileM.draw(g2);
 		
 		player.draw(g2);
+		
 		
 		g2.dispose();//dispose of the graphics context and release any system resources that is using (save some memories)
 		
