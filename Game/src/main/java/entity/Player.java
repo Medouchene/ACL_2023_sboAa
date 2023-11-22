@@ -18,17 +18,33 @@ public class Player extends Entity{
 	KeyHandler keyH;
 	Random random = new Random();
 	
+	
+	public final int screenX;
+	 public final int screenY;
+	 int hasKey = 0;
+	 int porteFeuille = 0;
+	
 	//constructor
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
 		this.gp = gp;
 		this.keyH = keyH;
-		
+		//
+		gp.getClass();
+	      int var10001 = 768 / 2;
+	      gp.getClass();
+	      this.screenX = var10001 - 48 / 2;
+	      gp.getClass();
+	      var10001 = 576 / 2;
+	      gp.getClass();
+	      this.screenY = var10001 - 48 / 2;
 		
 		//instantiate solidArea
-		solidArea = new Rectangle();
-		solidArea.x = 8;
-		solidArea.y = 16;
+	      this.solidArea = new Rectangle();
+	      this.solidArea.x = 8;
+	      this.solidArea.y = 16;
+	      this.solidAreaDefaultX = this.solidArea.x;
+	      this.solidAreaDefaultY = this.solidArea.y;
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
@@ -82,9 +98,12 @@ public class Player extends Entity{
 				direction = "right";
 			}
 			
-			//CHECK TILE COLLISION
+			//CHECK COLLISION
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
+			
+			int objIndex = gp.cChecker.checkObject(this, true);
+			pickUpObject(objIndex);
 			
 			//IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
@@ -113,6 +132,27 @@ public class Player extends Entity{
 			}
 		}
 	}
+	
+	public void pickUpObject(int i){
+		if (i != 999) {
+			String objectName = gp.obj[i].name;
+			
+			switch(objectName) {
+			case "Key":
+				hasKey++;
+				gp.obj[i] = null;
+				break;
+			case "Door":
+				hasKey--;
+				//passe au next level
+				break;
+			case "Money":
+				gp.obj[i] = null;
+				porteFeuille++;
+			}
+		}
+	}
+	
 	public void draw(Graphics2D g2) {
 		
 //		g2.setColor(Color.white);

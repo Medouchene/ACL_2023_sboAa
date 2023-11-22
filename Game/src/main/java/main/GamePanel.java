@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -53,10 +54,10 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//instantiate CollisionChecker class
 	public CollisionChecker cChecker = new CollisionChecker(this);
-	
+	public AssetSetter aSetter = new AssetSetter(this);
 	//instantiate Player class
-	Player player = new Player(this,keyH); //pass this GamePanel class and KeyHandler
-	
+	public Player player = new Player(this,keyH); //pass this GamePanel class and KeyHandler
+	public SuperObject obj[] = new SuperObject[10];
 /*	On en a plus besoin car on la defini dans la class Player
 	//Set player's default position
 	int playerX = 100;
@@ -72,23 +73,12 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);//if set true, all the drawing from this component will be done in an offscreen painting buffer
 		this.addKeyListener(keyH);//add the keyH into the GamePanel --> this GamePanel can recognize key input
 		this.setFocusable(true);//with this, this GamePanel can be 'focused' to receive key input
-		 resetButton = new JButton("Reset Game");
-	        resetButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                // Handle the button click event
-	                resetGame();
-	            }
-	        });
-	        resetButton.setBackground(Color.BLUE); 
-	        resetButton.setPreferredSize(new Dimension(3*tileSize, tileSize));
-	        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-	        // Add the components to the panel
-	        add(Box.createVerticalGlue()); // Add some space at the top
-	        add(resetButton);
+		 
 	        
 		
+	}
+	public void setupGame() {
+		aSetter.setObject();
 	}
 
 	public void startGameThread() {
@@ -98,22 +88,7 @@ public class GamePanel extends JPanel implements Runnable{
 		//so basically we are passing GamePanel class to this thread's constructor that's how you instantiate a thread
 		gameThread.start(); //it's gonna automatically call this run method
 	}
-	 private void resetGame() {
-	        // Reset any game-related variables or objects here
-	        // For example, you might reset the player's position, scores, etc.
-	        // You may also need to restart the game thread if applicable.
-
-	        // Example: Reset player position
-	        player.setDefaultValues();
-
-	        // Example: Restart the game thread
-	        if (gameThread != null && !gameThread.isAlive()) {
-	            startGameThread();
-	        }
-
-	        // Request focus for key input
-	        this.requestFocus();
-	    }
+	
 	
 	
 	//when we start this gameThread it automatically calls this run method
@@ -234,6 +209,12 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		//call draw method inside of this tile manager --- tjrs lecrire avant player.draw()
 		tileM.draw(g2);
+		
+		for(int i = 0; i < this.obj.length; ++i) {
+	         if (this.obj[i] != null) {
+	            this.obj[i].draw(g2, this);
+	         }
+	      }
 		
 		player.draw(g2);
 		
