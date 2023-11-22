@@ -19,5 +19,7 @@ public class Entity {
 	
 	//collison detection
 	public Rectangle solidArea;
+	   public int solidAreaDefaultX;
+	   public int solidAreaDefaultY;
 	public boolean collisionOn = false;
 }

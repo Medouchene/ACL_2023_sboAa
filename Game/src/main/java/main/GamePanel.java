@@ -1,21 +1,31 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
 	
 	//niveau
 	public String niveau = JOptionPane.showInputDialog(null, "Veuillez saisir un niveau (1,2,3) : ");
-
+	private JButton resetButton;
+	
 	//SCREEN SETTINGS
 	final int originalTileSize = 16; // 16x16 tile
 	final int scale = 3;
@@ -25,7 +35,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int maxScreenCol = 16;
 	public final int maxScreenRow = 12 ;
 	public final int screenWidth = tileSize * maxScreenCol;//768 pixels
-	public final int screenHeight = tileSize * maxScreenRow;//576 pixels
+	public final int screenHeight = tileSize *( maxScreenRow+1);//576 pixels
+	
+	
 	
 	//FPS 
 	int FPS = 60;
@@ -40,10 +52,10 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//instantiate CollisionChecker class
 	public CollisionChecker cChecker = new CollisionChecker(this);
-	
+	public AssetSetter aSetter = new AssetSetter(this);
 	//instantiate Player class
-	Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
-	
+	public Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
+	public SuperObject obj[] = new SuperObject[10];
 /*	On en a plus besoin car on la defini dans la class Player
 	//Set player's default position
 	int playerX = 100;
@@ -59,7 +71,12 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);//if set true, all the drawing from this component will be done in an offscreen painting buffer
 		this.addKeyListener(keyH);//add the keyH into the GamePanel --> this GamePanel can recognize key input
 		this.setFocusable(true);//with this, this GamePanel can be 'focused' to receive key input
+		 
+	        
 		
+	}
+	public void setupGame() {
+		aSetter.setObject();
 	}
 
 	public void startGameThread() {
@@ -71,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	
-	@Override
+	
 	//when we start this gameThread it automatically calls this run method
 //"SLEEP" METHOD	
 //	public void run() {
@@ -114,7 +131,15 @@ public class GamePanel extends JPanel implements Runnable{
 //		}
 //		
 //	}
-	
+	/*public Integer getX0() {
+		int x0 ; int y0;
+		do{
+			x0 = random.nextInt(500);
+			y0 = random.nextInt(500);
+		} while(tileM.mapTileNum[x0][y0] != 0);
+		List<Integer> l = new ArrayList<>();
+		return x0, y0;
+	}*/
 //"DELTA/ACCUMILATOR" METHOD	
 	public void run() {
 		
@@ -151,6 +176,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 		}
 	}
+
 	
 	public void update() {
 		
@@ -170,8 +196,13 @@ public class GamePanel extends JPanel implements Runnable{
 		//call draw method inside of this tile manager --- tjrs lecrire avant player.draw()
 		tileM.draw(g2);
 		
-		player.draw(g2);
+		for(int i = 0; i < this.obj.length; ++i) {
+	         if (this.obj[i] != null) {
+	            this.obj[i].draw(g2, this);
+	         }
+	      }
 		
+		player.draw(g2);
 		
 		g2.dispose();//dispose of the graphics context and release any system resources that is using (save some memories)
 		

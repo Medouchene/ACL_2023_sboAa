@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -17,22 +18,42 @@ public class Player extends Entity{
 
 	GamePanel gp;
 	KeyHandler keyH;
+	Random random = new Random();
 	
 	//Jauge de vie
 	private int vie ;
 	private final int MAX_VIE=500;
 	
-	//constructor
+	
+	public final int screenX;
+	 public final int screenY;
+	 int hasKey = 0;
+	 int porteFeuille = 0;
+	
+	//New constructor OG 
 	public Player(GamePanel gp, KeyHandler keyH, TileManager tileManager) {
 		
+
 		this.gp = gp;
 		this.keyH = keyH;
 		this.vie=MAX_VIE;
 		
+		//
+		gp.getClass();
+	      int var10001 = 768 / 2;
+	      gp.getClass();
+	      this.screenX = var10001 - 48 / 2;
+	      gp.getClass();
+	      var10001 = 576 / 2;
+	      gp.getClass();
+	      this.screenY = var10001 - 48 / 2;
+		
 		//instantiate solidArea
-		solidArea = new Rectangle();
-		solidArea.x = 8;
-		solidArea.y = 16;
+	      this.solidArea = new Rectangle();
+	      this.solidArea.x = 8;
+	      this.solidArea.y = 16;
+	      this.solidAreaDefaultX = this.solidArea.x;
+	      this.solidAreaDefaultY = this.solidArea.y;
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
@@ -40,6 +61,7 @@ public class Player extends Entity{
 		getPlayerImage();
 	}
 	
+	//OG
 	public void setDefaultValues(TileManager tileManager) {
 	    int mapWidth = tileManager.mapTileNum.length;
 	    int mapHeight = tileManager.mapTileNum[0].length;
@@ -60,20 +82,19 @@ public class Player extends Entity{
 	    speed = 4;
 	    direction = "down";
 	}
+	
 
-	
-	
 	public void getPlayerImage() {
 		try {
 			
-			up1  = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
+			up1  = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -98,9 +119,12 @@ public class Player extends Entity{
 				direction = "right";
 			}
 			
-			//CHECK TILE COLLISION
+			//CHECK COLLISION
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
+			
+			int objIndex = gp.cChecker.checkObject(this, true);
+			pickUpObject(objIndex);
 			
 			//IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
@@ -113,6 +137,8 @@ public class Player extends Entity{
 				case "left": x -= speed; break;
 				case "right": x += speed; break;
 				}
+				System.out.printf("   x act est " + x/48);
+				System.out.printf("   y act est " + y/48);
 			}
 			
 			//create a simple sprite changer
@@ -127,7 +153,7 @@ public class Player extends Entity{
 			}
 		}
 		
-	//Jauge de vie
+		//Jauge de vie
 		if (collisionOn) {
 			double reduction = 0.1 ;
 			double redutctionAmount = (MAX_VIE*reduction)/100.0;
@@ -136,10 +162,30 @@ public class Player extends Entity{
 		if (vie<=0) {
 			//GAME OVER
 		}
+	
 	}
 	
 	
 	
+	public void pickUpObject(int i){
+		if (i != 999) {
+			String objectName = gp.obj[i].name;
+			
+			switch(objectName) {
+			case "Key":
+				hasKey++;
+				gp.obj[i] = null;
+				break;
+			case "Door":
+				hasKey--;
+				//passe au next level
+				break;
+			case "Money":
+				gp.obj[i] = null;
+				porteFeuille++;
+			}
+		}
+	}
 	
 	public void draw(Graphics2D g2) {
 		
@@ -196,7 +242,4 @@ public class Player extends Entity{
 		 g2.fillRoundRect(12, 12, healthBarWidth - 4, 16, 8, 8); //
 		
 	}
-	
-
-	
 }
