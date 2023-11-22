@@ -234,12 +234,11 @@ public class Player extends Entity{
 		 int healthBarWidth = (int) ((double) vie / MAX_VIE * 100); // Largeur de la barre de vie proportionnelle à la vie restante
 
 		 g2.setColor(Color.BLACK);
-		 g2.fillRoundRect(10, 10, 100, 20, 10, 10); // Rectangle arrondi pour la barre de vie
+	        g2.fillRoundRect(10, gp.screenHeight - 30, 100, 20, 10, 10);
 
-		    // Dessiner le dégradé pour la jauge de vie
-		 GradientPaint gradient = new GradientPaint(0, 0, Color.RED, healthBarWidth, 0, Color.GREEN); 
-		 g2.setPaint(gradient);
-		 g2.fillRoundRect(12, 12, healthBarWidth - 4, 16, 8, 8); //
+	        GradientPaint gradient = new GradientPaint(0, 0, Color.RED, healthBarWidth, 0, Color.GREEN);
+	        g2.setPaint(gradient);
+	        g2.fillRoundRect(12, gp.screenHeight- 28, healthBarWidth - 4, 16, 8, 8);
 		
 	}
 }
