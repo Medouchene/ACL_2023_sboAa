@@ -15,7 +15,8 @@ public class TileManager {
 	GamePanel gp;
 	public Tile[] tile; //array
 	public int mapTileNum [][];	
-	
+	public int DoorX;
+	public int DoorY;
 	//constructeur
 	public TileManager(GamePanel gp) {
 		
@@ -28,7 +29,9 @@ public class TileManager {
 		getTileImage();
 		
 		//niveaux
-		if (gp.niveau.equals("1")) {
+		if (gp.niveau.equals("0")) {
+			loadMap("/maps/map01.txt");
+		}else if (gp.niveau.equals("1")) {
 			loadMap("/maps/map01.txt");
 		}else if (gp.niveau.equals("2")) {
 			loadMap("/maps/map02.txt");
@@ -62,7 +65,7 @@ public class TileManager {
 
 			
 			tile[5] = new Tile();
-			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
+			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/door.png"));
 			
 			
 			
@@ -81,6 +84,7 @@ public class TileManager {
 			int col = 0;
 			int row = 0;
 			
+			
 			while(col < gp.maxScreenCol && row < gp.maxScreenRow) {
 				
 				String line = br.readLine(); //read a line of text and put it into the string line
@@ -93,9 +97,14 @@ public class TileManager {
 					int num = Integer.parseInt(numbers[col]); // use col as an index for numbers[] array
 					//We store the extracted number int the mapTileNum[][]
 					mapTileNum[col][row] = num;
-					System.out.print("mapTilenum x est " + col);
+					if(num == 5) {
+						DoorY = row;
+						DoorX = col;
+						
+					}
+					/*System.out.print("mapTilenum x est " + col);
 					System.out.print("mapTilenum y est " + row);
-					System.out.println("mapTilenum est " + mapTileNum[col][row]);
+					System.out.println("mapTilenum est " + mapTileNum[col][row]);*/
 					//continue this until everything in the numbers[] is stored int the mapTileNum[][]
 					col++;
 				}

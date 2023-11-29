@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class Entity {
 
 	public int x, y;
-	public int speed;
+	public int speed = 4;
 	
 	//BufferedImage describes an image with an accessible buffer of image data; we use this to store our images files
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;

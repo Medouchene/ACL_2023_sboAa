@@ -5,7 +5,7 @@ import object.OBJ_Door;
 import object.OBJ_Key;
 import object.OBJ_Money;
 
-public class AssetSetter {
+public class AssetSetter{
 	GamePanel gp;
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -16,8 +16,8 @@ public class AssetSetter {
 		gp.obj[0].y = 10*gp.tileSize;
 		
 		gp.obj[1] = new OBJ_Door();
-		gp.obj[1].x= 1*gp.tileSize; 
-		gp.obj[1].y = 0*gp.tileSize;
+		gp.obj[1].x= gp.tileM.DoorX * gp.tileSize; 
+		gp.obj[1].y = gp.tileM.DoorY * gp.tileSize;
 		
 		
 		gp.obj[2] = new OBJ_Money();
@@ -27,9 +27,7 @@ public class AssetSetter {
 		gp.obj[3].x= 6*gp.tileSize; 
 		gp.obj[3].y = 6*gp.tileSize;
 		
-		gp.obj[4] = new OBJ_Box();
-		gp.obj[4].x= 9*gp.tileSize; 
-		gp.obj[4].y = 10*gp.tileSize;
+		
 		
 	}
 }

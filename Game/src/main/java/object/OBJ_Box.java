@@ -14,6 +14,6 @@ public class OBJ_Box extends SuperObject{
 	         e.printStackTrace();
 	      }
 
-	      this.collision = true;
+	      this.collision = false;
 	   }
 }

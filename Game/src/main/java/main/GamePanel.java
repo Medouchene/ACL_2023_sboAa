@@ -23,7 +23,8 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable{
 	
 	//niveau
-	public String niveau = JOptionPane.showInputDialog(null, "Veuillez saisir un niveau (1,2,3) : ");
+	public String niveau="0";
+	//public String niveau = JOptionPane.showInputDialog(null, "Veuillez saisir un niveau (1,2,3) : ");
 	private JButton resetButton;
 	
 	//SCREEN SETTINGS
@@ -47,12 +48,17 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//instantiate this KeyHandler
 	KeyHandler keyH = new KeyHandler();
-	//Time
-	Thread gameThread; //Thread is something you can start and stop and once a thread started, it keeps your program running until you stop it
-	
+
 	//instantiate CollisionChecker class
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);
+	public UI ui = new UI(this);
+	
+	public EventHandler eHandler = new EventHandler(this);
+	//Time
+	Thread gameThread; //Thread is something you can start and stop and once a thread started, it keeps your program running until you stop it
+	
+	
 	//instantiate Player class
 	public Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
 	public SuperObject obj[] = new SuperObject[10];
@@ -61,7 +67,9 @@ public class GamePanel extends JPanel implements Runnable{
 	int playerX = 100;
 	int playerY = 100;
 	int playerSpeed = 4; //ie 4 pixels
-*/	
+*/
+	public int dialogueState;	
+	int gameState;
 	
 	//create a constructor of this GamePanel
 	public GamePanel() {
@@ -84,53 +92,84 @@ public class GamePanel extends JPanel implements Runnable{
 		//instantiate this game Thread
 		gameThread = new Thread(this); // 'this' means this class, so GamePanel
 		//so basically we are passing GamePanel class to this thread's constructor that's how you instantiate a thread
-		gameThread.start(); //it's gonna automatically call this run method
+		//gameThread.start(); //it's gonna automatically call this run method
+		run();
+		
 	}
 	
+	private void switchLevel() {
+		int currentLevel = Integer.parseInt(niveau);
+		if (currentLevel == 0) {
+			currentLevel=1;
+		}
+		if (currentLevel < 3 && player.playerWin()) {
+			currentLevel++;
+			System.out.println("niveau: " + niveau);
+	        niveau = Integer.toString(currentLevel);
+	        gameThread = null;
+	        tileM.loadMap("/maps/map0" + niveau + ".txt");
+	        
+	        setupGame();
+	        startGameThread();
+	        
+		}else if (player.playerWin()){
+	        // Player has completed all levels
+	        JOptionPane.showMessageDialog(null, "Congratulations! You have completed all levels.");
+	        
+	        resetGame();
+	    }
+	}
+	private void resetGame() {
+	 
+	    niveau = "1"; // Reset level to 1
 	
+	    gameThread = null;
+	}
+
 	
 	//when we start this gameThread it automatically calls this run method
-//"SLEEP" METHOD	
-//	public void run() {
+//"SLEEP" METHOD
+	/*
+public void run() {
 //		
 //		//'sleep' method
-//		double drawInterval = 1000000000/FPS; // =1billionnanoseconds/FPS=16 666 666 or 1s/60 = 0.01666 seconds
-//		double nextDrawTime = System.nanoTime() + drawInterval;
+		double drawInterval = 1000000000/FPS; // =1billionnanoseconds/FPS=16 666 666 or 1s/60 = 0.01666 seconds
+		double nextDrawTime = System.nanoTime() + drawInterval;
 //		
 //		//create a game loop, will be the core of the game
-//		while(gameThread != null) {
+		while(gameThread != null) {
 //			
 //			//check the current time
-//			//long currentTime = System.nanoTime();//returns the current value of the running Java Virtual Machine's high-resolution time source, in nanoseconds, 1 000 000 000 nanoseconds = 1 second
-//			//System.out.println("current Time : " +currentTime);
-//			//long currentTime2 = System.currentTimeMillis();//in milliseconds 1 000 milliseconds = 1 second --> moins précis
+			long currentTime = System.nanoTime();//returns the current value of the running Java Virtual Machine's high-resolution time source, in nanoseconds, 1 000 000 000 nanoseconds = 1 second
+			System.out.println("current Time : " +currentTime);
+			long currentTime2 = System.currentTimeMillis();//in milliseconds 1 000 milliseconds = 1 second --> moins précis
 //			
-////test1			System.out.println("The game loop is running");
+			System.out.println("The game loop is running");
 //			// 1 UPDATE : update information such as character positions
-//			update();
+			update();
 //	
 //			// 2 DRAW : draw the screen with the updated information
-//			repaint();
+			repaint();
 //			
-//			try {
-//				double remainingTime = nextDrawTime - System.nanoTime();
-//				remainingTime = remainingTime/1000000;//in milliseconds
+			try {
+				double remainingTime = nextDrawTime - System.nanoTime();
+			remainingTime = remainingTime/1000000;//in milliseconds
+				
+				if(remainingTime < 0) {
+					remainingTime = 0;
+			}
 //				
-//				if(remainingTime < 0) {
-//					remainingTime = 0;
-//				}
+				Thread.sleep((long)remainingTime);//pause the game loop until the sleep time is over
 //				
-//				Thread.sleep((long)remainingTime);//pause the game loop until the sleep time is over
+			nextDrawTime += drawInterval;
 //				
-//				nextDrawTime += drawInterval;
-//				
-//			} catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 //				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+			e.printStackTrace();
+		}
+	}
 //		
-//	}
+	}
 	/*public Integer getX0() {
 		int x0 ; int y0;
 		do{
@@ -150,7 +189,6 @@ public class GamePanel extends JPanel implements Runnable{
 		//display FPS
 		long timer = 0;
 		int drawCount = 0;
-		
 		
 		while(gameThread != null) {
 			
@@ -180,7 +218,10 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void update() {
 		
+		
 		player.update();
+		switchLevel();
+		
 		
 	}
 	public void paintComponent(Graphics g) {

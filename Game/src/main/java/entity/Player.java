@@ -79,7 +79,6 @@ public class Player extends Entity{
 	        }
 	    }
 
-	    speed = 4;
 	    direction = "down";
 	}
 	
@@ -102,7 +101,7 @@ public class Player extends Entity{
 	}
 	
 	public void update() {
-		
+
 		//the character is moving when we are not pressing any keys, to fix this:
 		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true ) {
 			//we change the player position here
@@ -123,6 +122,10 @@ public class Player extends Entity{
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			
+			//CHECK EVENT
+			gp.eHandler.checkEvent();
+			
+			
 			int objIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
 			
@@ -137,8 +140,10 @@ public class Player extends Entity{
 				case "left": x -= speed; break;
 				case "right": x += speed; break;
 				}
-				System.out.printf("   x act est " + x/48);
-				System.out.printf("   y act est " + y/48);
+				//System.out.println("   x act est " + x);
+				//System.out.println("   y act est " + y);
+				//System.out.println(playerWin());
+				
 			}
 			
 			//create a simple sprite changer
@@ -155,9 +160,7 @@ public class Player extends Entity{
 		
 		//Jauge de vie
 		if (collisionOn) {
-			double reduction = 0.1 ;
-			double redutctionAmount = (MAX_VIE*reduction)/100.0;
-			vie-=redutctionAmount;
+			setVie();
 		}
 		if (vie<=0) {
 			//GAME OVER
@@ -166,6 +169,37 @@ public class Player extends Entity{
 	}
 	
 	
+	
+	public int getVie() {
+		return vie;
+	}
+
+	public void setVie() {
+		
+		double reduction = 0.1 ;
+		double redutctionAmount = (MAX_VIE*reduction)/100.0;
+		vie-=redutctionAmount;
+		
+	}
+	public boolean playerWin() {
+		int playerX = this.x;
+		int playerY = this.y;
+		int treasureX = gp.obj[1].x;
+		int treasureY = gp.obj[1].y;
+
+		// Définissez une distance minimale considérée comme "trop proche" (à ajuster selon vos besoins)
+		double distanceLimite = 20.0;
+
+		// Calculez la distance entre le joueur et le trésor
+		double distance = Math.sqrt(Math.pow(playerX - treasureX, 2) + Math.pow(playerY - treasureY, 2));
+		//System.out.println(distance);
+		if(distance < distanceLimite && this.hasKey == 1) {
+			this.hasKey--;
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 	public void pickUpObject(int i){
 		if (i != 999) {
@@ -177,7 +211,7 @@ public class Player extends Entity{
 				gp.obj[i] = null;
 				break;
 			case "Door":
-				hasKey--;
+				
 				//passe au next level
 				break;
 			case "Money":
