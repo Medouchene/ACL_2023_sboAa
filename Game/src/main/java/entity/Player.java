@@ -160,12 +160,16 @@ public class Player extends Entity{
 		
 		//Jauge de vie
 		if (collisionOn) {
-			setVie();
+			setVie(-1);
 		}
 		if (vie<=0) {
 			//GAME OVER
 		}
-	
+		if (porteFeuille>0 && vie<MAX_VIE/2) {
+			setVie(1);
+			porteFeuille--;
+		}
+		
 	}
 	
 	
@@ -174,11 +178,16 @@ public class Player extends Entity{
 		return vie;
 	}
 
-	public void setVie() {
-		
-		double reduction = 0.1 ;
-		double redutctionAmount = (MAX_VIE*reduction)/100.0;
-		vie-=redutctionAmount;
+	public void setVie(int a) {
+		if (a==-1) {
+			double reduction = 0.1 ;
+			double redutctionAmount = (MAX_VIE*reduction)/100.0;
+			vie-=redutctionAmount;
+		}else if (a==1) {
+			vie = MAX_VIE;
+		}
+		System.out.println("   key act est " + hasKey);
+		System.out.println("   Wallet act est " + porteFeuille);
 		
 	}
 	public boolean playerWin() {

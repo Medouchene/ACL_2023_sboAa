@@ -9,7 +9,7 @@ public class OBJ_Money extends SuperObject{
 		
 		name = "Money";
 		try {
-			image= ImageIO.read(getClass().getResource("/objects/money0.png"));
+			image= ImageIO.read(getClass().getResource("/objects/blood.png"));
 		} catch(IOException e) {
 			e.printStackTrace();
 			

@@ -52,7 +52,7 @@ public class EventHandler {
 	public void damagePit(int gameState) {
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "F off";
-		gp.player.setVie();
+		gp.player.setVie(-1);
 		
 	}
 	
