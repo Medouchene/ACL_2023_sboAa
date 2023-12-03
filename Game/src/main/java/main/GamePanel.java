@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import entity.Monstre;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -24,8 +25,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//niveau
 	public String niveau="0";
-	//public String niveau = JOptionPane.showInputDialog(null, "Veuillez saisir un niveau (1,2,3) : ");
-	private JButton resetButton;
+	
 	
 	//SCREEN SETTINGS
 	final int originalTileSize = 16; // 16x16 tile
@@ -61,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//instantiate Player class
 	public Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
+	public Monstre monstre = new Monstre(this,tileM);
 	public SuperObject obj[] = new SuperObject[10];
 /*	On en a plus besoin car on la defini dans la class Player
 	//Set player's default position
@@ -220,6 +221,7 @@ public void run() {
 		
 		
 		player.update();
+		monstre.update();
 		switchLevel();
 		
 		
@@ -244,6 +246,7 @@ public void run() {
 	      }
 		
 		player.draw(g2);
+		monstre.draw(g2);
 		
 		g2.dispose();//dispose of the graphics context and release any system resources that is using (save some memories)
 		

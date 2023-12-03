@@ -16,7 +16,7 @@ import tile.TileManager;
 
 public class Player extends Entity{
 
-	GamePanel gp;
+	//GamePanel gp;
 	KeyHandler keyH;
 	Random random = new Random();
 	
@@ -24,6 +24,7 @@ public class Player extends Entity{
 	private int vie ;
 	private final int MAX_VIE=500;
 	
+	private int speed = 4;
 	
 	public final int screenX;
 	 public final int screenY;
@@ -34,7 +35,8 @@ public class Player extends Entity{
 	public Player(GamePanel gp, KeyHandler keyH, TileManager tileManager) {
 		
 
-		this.gp = gp;
+		super(gp);
+		
 		this.keyH = keyH;
 		this.vie=MAX_VIE;
 		
