@@ -251,4 +251,7 @@ public void run() {
 		g2.dispose();//dispose of the graphics context and release any system resources that is using (save some memories)
 		
 	}
+    public int getTileSize() {
+        return tileSize;
+    }
 }

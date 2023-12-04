@@ -30,6 +30,8 @@ public class Player extends Entity{
 	 public final int screenY;
 	 int hasKey = 0;
 	 int porteFeuille = 0;
+	 private boolean attacking = false;
+	 private int attackCounter = 0;
 	
 	//New constructor OG 
 	public Player(GamePanel gp, KeyHandler keyH, TileManager tileManager) {
@@ -87,7 +89,7 @@ public class Player extends Entity{
 
 	public void getPlayerImage() {
 		try {
-			
+			//WALKING SPRITES
 			up1  = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
 			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
 			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
@@ -97,15 +99,36 @@ public class Player extends Entity{
 			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
 			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
 			
+			
+			attack_up1  = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_up_1.png"));
+			attack_up2 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_up_2.png"));
+			attack_down1 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_down_1.png"));
+			attack_down2 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_down_2.png"));
+			attack_left1 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_left_1.png"));
+			attack_left2 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_left_2.png"));
+			attack_right1 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_right_1.png"));
+			attack_right2 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_right_2.png"));
 		}catch(IOException e) {
 			e.printStackTrace();
-		}
+		}	
 	}
 	
+	
+	
+	
+	
+	
 	public void update() {
+		
+        if (keyH.attackPressed == true) {
+            attacking = true;
+ 
+        }else {
+        	attacking = false;
+        }
 
 		//the character is moving when we are not pressing any keys, to fix this:
-		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true ) {
+		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true )  {
 			//we change the player position here
 			if(keyH.upPressed == true) {
 				direction = "up";
@@ -159,6 +182,10 @@ public class Player extends Entity{
 				spriteCounter = 0;//reseat
 			}
 		}
+		
+		
+		
+		
 		
 		//Jauge de vie
 		if (collisionOn) {
@@ -233,46 +260,71 @@ public class Player extends Entity{
 	}
 	
 	public void draw(Graphics2D g2) {
+		    BufferedImage image = null;
+
+		    
+		        switch (direction) {
+		            case "up":
+		                if (getSpriteNumber() == 1)
+		                    image = up1;
+		                else if (getSpriteNumber() == 2)
+		                    image = up2;
+		                break;
+		            case "down":
+		                if (getSpriteNumber() == 1)
+		                    image = down1;
+		                else if (getSpriteNumber() == 2)
+		                    image = down2;
+		                break;
+		            case "left":
+		                if (getSpriteNumber() == 1)
+		                    image = left1;
+		                else if (getSpriteNumber() == 2)
+		                    image = left2;
+		                break;
+		            case "right":
+		                if (getSpriteNumber() == 1)
+		                    image = right1;
+		                else if (getSpriteNumber() == 2)
+		                    image = right2;
+		                break;
+		            default:
+		            	break;}
+		            
+		            if (attacking) {
+		    		        switch (direction) {
+		    		            case "up":
+		    		                if (getSpriteNumber() == 1)
+		    		                    image = attack_up1;
+		    		                else if (getSpriteNumber() == 2)
+		    		                    image = attack_up2;
+		    		                break;
+		    		            case "down":
+		    		                if (getSpriteNumber() == 1)
+		    		                    image = attack_down1;
+		    		                else if (getSpriteNumber() == 2)
+		    		                    image = attack_down2;
+		    		                break;
+		    		            case "left":
+		    		                if (getSpriteNumber() == 1)
+		    		                    image = attack_left1;
+		    		                else if (getSpriteNumber() == 2)
+		    		                    image = attack_left2;
+		    		                break;
+		    		            case "right":
+		    		                if (getSpriteNumber() == 1)
+		    		                    image = attack_right1;
+		    		                else if (getSpriteNumber() == 2)
+		    		                    image = attack_right2;
+		    		                break;
+		    		            default:
+		    		            	break;}
+		    		        }
+		    		     
+		        
+
 		
-//		g2.setColor(Color.white);
-//		g2.fillRect(x, y, gp.tileSize, gp.tileSize);// fillRect(x, y, width, height) draw a rectangle and fills it with the specified color
-	
-		BufferedImage image = null;
 		
-		switch(direction) {
-		case "up":
-			if(spriteNum == 1) {
-				image = up1;
-			}
-			if(spriteNum == 2) {
-				image = up2;
-			}
-			break;
-		case "down":
-			if(spriteNum == 1) {
-				image = down1;
-			}
-			if(spriteNum == 2) {
-				image = down2;
-			}
-			break;
-		case "left":
-			if(spriteNum == 1) {
-				image = left1;
-			}
-			if(spriteNum == 2) {
-				image = left2;
-			}
-			break;
-		case "right":
-			if(spriteNum == 1) {
-				image = right1;
-			}
-			if(spriteNum == 2) {
-				image = right2;
-			}
-			break;
-		}
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);//Draw an image on the screen
 		
 		//Dessiner la jauge de vie
@@ -286,4 +338,24 @@ public class Player extends Entity{
 	        g2.fillRoundRect(12, gp.screenHeight- 28, healthBarWidth - 4, 16, 8, 8);
 		
 	}
+	
+	
+	 
+	    public int getSpriteCounter() {
+	        return spriteCounter;
+	    }
+
+
+	    public Entity setSpriteCounter(int spriteCounter) {
+	        this.spriteCounter = spriteCounter;
+	        return this;
+	    }
+
+	    public int getSpriteNumber() {
+	        return spriteNum;
+	    }
+	    
+	    public String getDirection() {
+	        return direction;
+	    }
 }

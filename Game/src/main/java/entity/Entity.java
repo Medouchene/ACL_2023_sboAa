@@ -13,11 +13,13 @@ public class Entity {
 		// TODO Auto-generated constructor stub
 		this.gp = gp;
 	}
+	
 	public int x, y;
 	public int speed;
 	
 	//BufferedImage describes an image with an accessible buffer of image data; we use this to store our images files
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+	public BufferedImage attack_up1, attack_up2 , attack_down1 , attack_down2 , attack_left1 , attack_left2 , attack_right1 , attack_right2 ;
 	public String direction;
 	
 	public int spriteCounter = 0;
@@ -28,5 +30,9 @@ public class Entity {
 	   public int solidAreaDefaultX;
 	   public int solidAreaDefaultY;
 	public boolean collisionOn = false;
+	
+	
+    
+    
 	
 }
