@@ -66,9 +66,9 @@ public class Monstre extends Entity {
 
 			int i = rand.nextInt(1000000);
 			//we change the monstre position here
-			if (i < 50000 && i > 900000) {
+			if (i < 50000 && i > 950000) {
 		        direction = "up";
-		    } else if (i >= 50000 && i < 100000) {
+		    } else if (i >= 100000 && i < 200000) {
 		        direction = "down";
 		    } else if (i >= 300000 && i < 350000) {
 		        direction = "left";
@@ -79,7 +79,7 @@ public class Monstre extends Entity {
 			
 			// Ensure the monster stays within the bounds of the game panel
 		    x = Math.max(0, Math.min(x, gp.getWidth() - gp.tileSize));
-		    y = Math.max(0, Math.min(y, gp.getHeight() - gp.tileSize));
+		    y = Math.max(0, Math.min(y, gp.getHeight() - 2*gp.tileSize));
 				
 				switch(direction) {
 				
