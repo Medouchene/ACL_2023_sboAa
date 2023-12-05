@@ -118,6 +118,14 @@ public class Player extends Entity{
 	
 	
 	
+	public int getHasKey() {
+		return hasKey;
+	}
+
+	public void setHasKey(int hasKey) {
+		this.hasKey = hasKey;
+	}
+
 	public void update() {
 		
         if (keyH.attackPressed == true) {
@@ -213,7 +221,8 @@ public class Player extends Entity{
 			double redutctionAmount = (MAX_VIE*reduction)/100.0;
 			vie-=redutctionAmount;
 		}else if (a==1) {
-			vie = MAX_VIE;
+			
+			vie+=MAX_VIE/2;
 		}
 		System.out.println("   key act est " + hasKey);
 		System.out.println("   Wallet act est " + porteFeuille);
@@ -228,7 +237,7 @@ public class Player extends Entity{
 		// Définissez une distance minimale considérée comme "trop proche" (à ajuster selon vos besoins)
 		double distanceLimite = 20.0;
 
-		// Calculez la distance entre le joueur et le trésor
+		// Calculez la distance entre le joueur et le trésor (the key)
 		double distance = Math.sqrt(Math.pow(playerX - treasureX, 2) + Math.pow(playerY - treasureY, 2));
 		//System.out.println(distance);
 		if(distance < distanceLimite && this.hasKey == 1) {
@@ -358,4 +367,6 @@ public class Player extends Entity{
 	    public String getDirection() {
 	        return direction;
 	    }
+
+		
 }

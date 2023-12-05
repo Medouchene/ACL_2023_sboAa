@@ -98,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	
-	private void switchLevel() {
+	void switchLevel() {
 		int currentLevel = Integer.parseInt(niveau);
 		if (currentLevel == 0) {
 			currentLevel=1;
@@ -120,7 +120,7 @@ public class GamePanel extends JPanel implements Runnable{
 	        resetGame();
 	    }
 	}
-	private void resetGame() {
+	void resetGame() {
 	 
 	    niveau = "1"; // Reset level to 1
 	

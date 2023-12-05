@@ -30,9 +30,11 @@ public class Entity {
 	   public int solidAreaDefaultX;
 	   public int solidAreaDefaultY;
 	public boolean collisionOn = false;
-	
-	
-    
-    
+	public int getPlayerX() {
+		return x;
+	}
+	public int getPlayerY() {
+		return y;
+	}
 	
 }

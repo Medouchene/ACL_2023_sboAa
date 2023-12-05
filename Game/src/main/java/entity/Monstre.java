@@ -63,7 +63,28 @@ public class Monstre extends Entity {
 	}
 	
 	public void update() {
+		/*
+				int targetX =getPlayerX();
+			    int targetY = getPlayerY();
 
+			    // Calculate the direction towards the target coordinates
+			    int xDirection = Integer.compare(targetX, x);
+			    int yDirection = Integer.compare(targetY, y);
+			  //we change the monstre position here
+				if ( xDirection == -1 && yDirection == -1) {
+			        direction = "up";
+			    } else if ( xDirection == 1 && yDirection == 1) {
+			        direction = "down";
+			    } else if ( xDirection == 1 && yDirection == 1) {
+			        direction = "left";
+			    } else if ( xDirection == 1 && yDirection == 1) {
+			        direction = "right";
+			    }
+			    // Update the monster position based on the direction
+			    x += xDirection * speed;
+			    y += yDirection * speed;
+*/
+			
 			int i = rand.nextInt(1000000);
 			//we change the monstre position here
 			if (i < 50000 && i > 950000) {
