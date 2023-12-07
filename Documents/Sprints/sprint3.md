@@ -14,11 +14,6 @@
 
 ## Retrospective SPRINT 3
 
-- Implémentation de la fonctionnalité permettant au joueur de se déplacer dans le labyrinthe en utilisant les touches directionnelles.
-- Gestion des collisions avec les murs et les obstacles.
-- Ajout de nouveaux éléments graphiques pour représenter les monstres et les trésors/récompenses dans l'interface.
-- Intégration des points de vie du joueur.
-
 # Ce qui a été réalisé  :
 - Implémentation de la fonctionnalité permettant au joueur de se déplacer dans le labyrinthe en utilisant les touches directionnelles.
 - Gestion des collisions avec les murs et les obstacles.
