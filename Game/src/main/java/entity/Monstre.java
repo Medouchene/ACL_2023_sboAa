@@ -4,11 +4,13 @@ import main.GamePanel;
 import tile.TileManager;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import java.awt.Rectangle;
 
 
 
@@ -18,7 +20,19 @@ public class Monstre extends Entity {
 	private int speed = 1;
 	int x;
 	int y;
-
+	//instantiate solidArea
+	Rectangle solidArea = new Rectangle();
+	int solidAreaDefaultX;
+	int solidAreaDefaultY;
+	   /*
+    
+    solidArea.x = 8;
+    solidArea.y = 16;
+    solidAreaDefaultX = solidArea.x;
+    solidAreaDefaultY = solidArea.y;
+	solidArea.width = 32;
+	solidArea.height = 32;
+*/
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public String direction;
 	
@@ -63,7 +77,7 @@ public class Monstre extends Entity {
 	}
 	
 	public void update() {
-		/*
+/*		
 				int targetX =getPlayerX();
 			    int targetY = getPlayerY();
 
@@ -71,14 +85,14 @@ public class Monstre extends Entity {
 			    int xDirection = Integer.compare(targetX, x);
 			    int yDirection = Integer.compare(targetY, y);
 			  //we change the monstre position here
-				if ( xDirection == -1 && yDirection == -1) {
-			        direction = "up";
-			    } else if ( xDirection == 1 && yDirection == 1) {
-			        direction = "down";
-			    } else if ( xDirection == 1 && yDirection == 1) {
+				if ( xDirection == -1 && yDirection == 0) {
 			        direction = "left";
-			    } else if ( xDirection == 1 && yDirection == 1) {
+			    } else if ( xDirection == 1 && yDirection == 0) {
 			        direction = "right";
+			    } else if ( xDirection == 0 && yDirection == -1) {
+			        direction = "up";
+			    } else if ( xDirection == 0 && yDirection == 1) {
+			        direction = "down";
 			    }
 			    // Update the monster position based on the direction
 			    x += xDirection * speed;
@@ -97,10 +111,8 @@ public class Monstre extends Entity {
 		        direction = "right";
 		    }
 			
+
 			
-			// Ensure the monster stays within the bounds of the game panel
-		    x = Math.max(0, Math.min(x, gp.getWidth() - gp.tileSize));
-		    y = Math.max(0, Math.min(y, gp.getHeight() - 2*gp.tileSize));
 				
 				switch(direction) {
 				
@@ -110,7 +122,9 @@ public class Monstre extends Entity {
 				case "left": x -= speed; break;
 				case "right": x += speed; break;
 				}
-			
+				// Ensure the monster stays within the bounds of the game panel
+			    x = Math.max(gp.tileSize, Math.min(x, gp.getWidth() - 2*gp.tileSize));
+			    y = Math.max(gp.tileSize, Math.min(y, gp.getHeight() - 3*gp.tileSize));
 			//create a simple sprite changer
 			spriteCounter++;
 			if(spriteCounter > 12) { //means the player image changes in every 12 frames
@@ -121,11 +135,23 @@ public class Monstre extends Entity {
 				}
 				spriteCounter = 0;//reseat
 			}
+			System.out.println(" xM : " + x);
+			System.out.println(" yM : " + y);
 		}
 		
 		
 	
 	
+	public int getMonstreX() {
+		return x;
+	}
+
+	public int getMonstreY() {
+		return y;
+	}
+
+	
+
 	public void draw(Graphics2D g2) {
 		
 //		g2.setColor(Color.white);

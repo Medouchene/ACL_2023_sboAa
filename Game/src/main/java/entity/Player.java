@@ -20,6 +20,7 @@ public class Player extends Entity{
 	KeyHandler keyH;
 	Random random = new Random();
 	
+	
 	//Jauge de vie
 	private int vie ;
 	private final int MAX_VIE=500;
@@ -153,6 +154,7 @@ public class Player extends Entity{
 			
 			//CHECK COLLISION
 			collisionOn = false;
+			collisionPM  = false;
 			gp.cChecker.checkTile(this);
 			
 			//CHECK EVENT
@@ -189,15 +191,20 @@ public class Player extends Entity{
 				}
 				spriteCounter = 0;//reseat
 			}
+			
 		}
+
 		
+		System.out.println(" xP : " + x);
+		System.out.println(" yP : " + y);
 		
-		
-		
+		System.out.println("BAaaaa3 : "+collisionPM);
 		
 		//Jauge de vie
-		if (collisionOn) {
+		if (collisionPM == true) {
 			setVie(-1);
+			System.out.println("BAaaaa3333333333 : "+collisionPM);
+
 		}
 		if (vie<=0) {
 			//GAME OVER
@@ -224,8 +231,8 @@ public class Player extends Entity{
 			
 			vie+=MAX_VIE/2;
 		}
-		System.out.println("   key act est " + hasKey);
-		System.out.println("   Wallet act est " + porteFeuille);
+		//System.out.println("   key act est " + hasKey);
+		//System.out.println("   Wallet act est " + porteFeuille);
 		
 	}
 	public boolean playerWin() {
@@ -266,6 +273,13 @@ public class Player extends Entity{
 				porteFeuille++;
 			}
 		}
+	}
+	
+	public int getPlayerX() {
+		return x;
+	}
+	public int getPlayerY() {
+		return y;
 	}
 	
 	public void draw(Graphics2D g2) {

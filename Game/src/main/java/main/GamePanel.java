@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import entity.CollisionPM;
 import entity.Monstre;
 import entity.Player;
 import object.SuperObject;
@@ -62,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//instantiate Player class
 	public Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
 	public Monstre monstre = new Monstre(this,tileM);
+	public CollisionPM collPM = new CollisionPM(this);
 	public SuperObject obj[] = new SuperObject[10];
 /*	On en a plus besoin car on la defini dans la class Player
 	//Set player's default position
@@ -218,7 +220,6 @@ public void run() {
 
 	
 	public void update() {
-		
 		
 		player.update();
 		monstre.update();

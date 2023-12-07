@@ -3,6 +3,8 @@ package main;
 import java.awt.Rectangle;
 
 import entity.Entity;
+import entity.Monstre;
+import entity.Player;
 
 public class CollisionChecker {
 	
@@ -72,6 +74,28 @@ public class CollisionChecker {
 			
 		}
 	}
+	public void checkCollisionPM(Entity entity, Player player, Monstre monstre) {
+        // Get the position of the player and monster
+        int playerX = player.getPlayerX();
+        int playerY = player.getPlayerY();
+
+        int monstreX = monstre.getMonstreX();
+        int monstreY = monstre.getMonstreY();
+
+        // Calculate the distance between player and monster
+        double distance = Math.sqrt(Math.pow(playerX - monstreX, 2) + Math.pow(playerY - monstreY, 2));
+        double distanceLimit = 20;
+        // Check if the distance is within the specified limit
+        if (distance < distanceLimit) {
+            // Collision detected
+            entity.collisionPM = true;
+        } else {
+            // No collision
+            entity.collisionPM = false;
+        }
+        System.out.println("Player-Monstre : "+ entity.collisionPM);
+       
+    }
 	public int checkObject(Entity entity, boolean player) {
 	      int index = 999;
 
