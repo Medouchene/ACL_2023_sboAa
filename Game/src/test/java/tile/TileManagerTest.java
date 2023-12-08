@@ -1,6 +1,8 @@
 package tile;
 
 import main.GamePanel;
+import tile.TileManager;
+
 import org.junit.Before;
 import org.junit.Test;
 

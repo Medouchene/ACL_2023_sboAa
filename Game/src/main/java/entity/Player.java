@@ -201,7 +201,7 @@ public class Player extends Entity{
 		System.out.println("BAaaaa3 : "+collisionPM);
 		
 		//Jauge de vie
-		if (collisionPM == true) {
+		if (collisionOn) {
 			setVie(-1);
 			System.out.println("BAaaaa3333333333 : "+collisionPM);
 
