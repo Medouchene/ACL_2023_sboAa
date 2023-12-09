@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import entity.CollisionPM;
+import entity.Entity;
 import entity.Monstre;
 import entity.Player;
 import object.SuperObject;
@@ -60,7 +61,8 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread; //Thread is something you can start and stop and once a thread started, it keeps your program running until you stop it
 	
 	
-	//instantiate Player class
+	//instantiate Player class 
+	public Entity entity = new Entity(this);
 	public Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
 	public Monstre monstre = new Monstre(this,tileM);
 	public CollisionPM collPM = new CollisionPM(this);
@@ -221,6 +223,7 @@ public void run() {
 	
 	public void update() {
 		
+		cChecker.checkCollisionPM(entity, player, monstre);
 		player.update();
 		monstre.update();
 		switchLevel();

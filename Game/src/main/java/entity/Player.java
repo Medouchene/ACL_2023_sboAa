@@ -198,12 +198,12 @@ public class Player extends Entity{
 		System.out.println(" xP : " + x);
 		System.out.println(" yP : " + y);
 		
-		System.out.println("BAaaaa3 : "+collisionPM);
+		System.out.println("BAaaaa3 : "+getCollisionPM());
 		
 		//Jauge de vie
 		if (collisionOn) {
 			setVie(-1);
-			System.out.println("BAaaaa3333333333 : "+collisionPM);
+			System.out.println("BAaaaa3333333333 : "+getCollisionPM());
 
 		}
 		if (vie<=0) {
