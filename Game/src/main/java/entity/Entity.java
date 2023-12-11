@@ -30,12 +30,18 @@ public class Entity {
 	   public int solidAreaDefaultX;
 	   public int solidAreaDefaultY;
 	public boolean collisionOn = false;
-	public boolean collisionPM = false;
+	boolean collisionPM;
 	public int getPlayerX() {
 		return x;
 	}
 	public int getPlayerY() {
 		return y;
+	}
+	public boolean getCollisionPM() {
+		return collisionPM;
+	}
+	public void setCollisionPM(boolean collisionPM) {
+		this.collisionPM = collisionPM;
 	}
 	
 }
