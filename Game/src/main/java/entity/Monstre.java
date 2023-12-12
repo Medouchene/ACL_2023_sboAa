@@ -3,6 +3,8 @@ package entity;
 import main.GamePanel;
 import tile.TileManager;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -34,10 +36,15 @@ public class Monstre extends Entity {
 	solidArea.height = 32;
 */
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+	public BufferedImage Monster_icon;
 	public String direction;
 	
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
+	
+	private int monsterVie ;
+	private final int MAX_MONSTER_VIE=500;
+
 	
 	public Monstre(GamePanel gp, TileManager tileManager) {
 		super(gp);
@@ -70,6 +77,9 @@ public class Monstre extends Entity {
 			left2 = ImageIO.read(getClass().getResourceAsStream("/monster/monstre_down_2.png"));
 			right1  = ImageIO.read(getClass().getResourceAsStream("/monster/monstre_down_1.png"));
 			right2 = ImageIO.read(getClass().getResourceAsStream("/monster/monstre_down_2.png"));
+			
+			Monster_icon=ImageIO.read(getClass().getResourceAsStream("/monster/Monster_icon.png"));
+			
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -194,6 +204,28 @@ public class Monstre extends Entity {
 			break;
 		}
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);//Draw an image on the screen
+		
+		
+		
+		monsterVie = 500 ;
+		int monsterHealthBarWidth = (int) ((double) monsterVie / MAX_MONSTER_VIE * 100); 
+		int monsterHealthBarX = gp.screenWidth - 110; // Same positions de la classe player 
+		int monsterHealthBarY = gp.screenHeight - 30;
+		
+		//barre de vie du monstre
+		g2.setColor(Color.BLACK);
+		g2.fillRoundRect(monsterHealthBarX, monsterHealthBarY, 100, 20, 10, 10);
+
+		GradientPaint monsterGradient = new GradientPaint(0, 0, Color.RED, monsterHealthBarWidth, 0, Color.GREEN);
+		g2.setPaint(monsterGradient);
+		g2.fillRoundRect(monsterHealthBarX + 2, monsterHealthBarY + 2, monsterHealthBarWidth - 4, 16, 8, 8);
+
+		int monsterIconX = gp.screenWidth - 160; // Same as player icon
+		int monsterIconY = gp.screenHeight - 40; 
+		int monsterIconSize = 30;
+
+		g2.drawImage(Monster_icon, monsterIconX, monsterIconY, monsterIconSize, monsterIconSize, null);
+		
 		
 	}
 

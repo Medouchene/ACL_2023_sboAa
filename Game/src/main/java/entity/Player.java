@@ -109,6 +109,9 @@ public class Player extends Entity{
 			attack_left2 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_left_2.png"));
 			attack_right1 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_right_1.png"));
 			attack_right2 = ImageIO.read(getClass().getResourceAsStream("/attack/boy_attack_right_2.png"));
+			
+			Player_icon = ImageIO.read(getClass().getResourceAsStream("/player/Player_icon.png"));
+
 		}catch(IOException e) {
 			e.printStackTrace();
 		}	
@@ -350,16 +353,24 @@ public class Player extends Entity{
 		
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);//Draw an image on the screen
 		
-		//Dessiner la jauge de vie
+		
+	    if (Player_icon != null) {
+	    	int iconX = 115; 
+	    	int iconY = gp.screenHeight - 35; //Normalement -30 bach tji m3a barre de vie
+	    	int iconSize = 30;
+	    	g2.drawImage(Player_icon, iconX, iconY, iconSize, iconSize, null);
+	    }
+
+	    //Dessiner la jauge de vie
 		 int healthBarWidth = (int) ((double) vie / MAX_VIE * 100); // Largeur de la barre de vie proportionnelle à la vie restante
 
-		 g2.setColor(Color.BLACK);
+		    g2.setColor(Color.BLACK);
 	        g2.fillRoundRect(10, gp.screenHeight - 30, 100, 20, 10, 10);
 
 	        GradientPaint gradient = new GradientPaint(0, 0, Color.RED, healthBarWidth, 0, Color.GREEN);
 	        g2.setPaint(gradient);
 	        g2.fillRoundRect(12, gp.screenHeight- 28, healthBarWidth - 4, 16, 8, 8);
-		
+	        
 	}
 	
 	
