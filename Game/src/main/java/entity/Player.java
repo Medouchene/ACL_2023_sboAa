@@ -179,9 +179,8 @@ public class Player extends Entity{
 				case "left": x -= speed; break;
 				case "right": x += speed; break;
 				}
-				//System.out.println("   x act est " + x);
-				//System.out.println("   y act est " + y);
-				//System.out.println(playerWin());
+				 x = Math.max(0, Math.min(x, gp.getWidth() - gp.tileSize));
+				 y = Math.max(0, Math.min(y, gp.getHeight() - 2*gp.tileSize));
 				
 			}
 			
@@ -199,15 +198,12 @@ public class Player extends Entity{
 		}
 
 		
-		System.out.println(" xP : " + x);
-		System.out.println(" yP : " + y);
-		
-		System.out.println("BAaaaa3 : "+getCollisionPM());
+	
 		
 		//Jauge de vie
 		if (getCollisionPM()) {
 			setVie(-1);
-			System.out.println("BAaaaa3333333333 : "+getCollisionPM());
+			System.out.println("Player - Monstre : "+getCollisionPM());
 
 		}
 		if (vie<=0) {

@@ -149,8 +149,7 @@ public class Monstre extends Entity {
 				}
 				spriteCounter = 0;//reseat
 			}
-			System.out.println(" xM : " + x);
-			System.out.println(" yM : " + y);
+
 		}
 		
 		
