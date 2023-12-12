@@ -16,7 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import entity.CollisionPM;
+
 import entity.Entity;
 import entity.Monstre;
 import entity.Player;
@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Entity entity = new Entity(this);
 	public Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
 	public Monstre monstre = new Monstre(this,tileM);
-	public CollisionPM collPM = new CollisionPM(this);
+
 	public SuperObject obj[] = new SuperObject[10];
 /*	On en a plus besoin car on la defini dans la class Player
 	//Set player's default position
@@ -205,6 +205,7 @@ public void run() {
 			
 			//when delta reach this drawInterval ie 1, why update, repaint and reset this delta
 			if(delta >= 1) {
+				
 				update();
 				repaint();
 				delta--;
@@ -223,13 +224,14 @@ public void run() {
 	
 	public void update() {
 		
-		cChecker.checkCollisionPM(entity, player, monstre);
+		
 		player.update();
 		monstre.update();
 		switchLevel();
 		
 		
 	}
+
 	public void paintComponent(Graphics g) {
 		//built-in method in Java, standard method to draw things on Jpanel
 		

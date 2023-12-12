@@ -9,6 +9,7 @@ import main.GamePanel;
 
 public class Entity {
 	GamePanel gp;
+	Monstre monstre;
 	public Entity(GamePanel gp) {
 		// TODO Auto-generated constructor stub
 		this.gp = gp;

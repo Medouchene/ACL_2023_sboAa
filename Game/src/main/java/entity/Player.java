@@ -157,8 +157,9 @@ public class Player extends Entity{
 			
 			//CHECK COLLISION
 			collisionOn = false;
-			collisionPM  = false;
+			collisionPM = false;
 			gp.cChecker.checkTile(this);
+			gp.cChecker.checkCollisionPM(this, gp.player, gp.monstre);
 			
 			//CHECK EVENT
 			gp.eHandler.checkEvent();
@@ -204,7 +205,7 @@ public class Player extends Entity{
 		System.out.println("BAaaaa3 : "+getCollisionPM());
 		
 		//Jauge de vie
-		if (collisionOn) {
+		if (getCollisionPM()) {
 			setVie(-1);
 			System.out.println("BAaaaa3333333333 : "+getCollisionPM());
 

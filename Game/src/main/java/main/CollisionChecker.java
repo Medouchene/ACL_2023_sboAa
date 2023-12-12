@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Rectangle;
 
-import entity.CollisionPM;
 import entity.Entity;
 import entity.Monstre;
 import entity.Player;
@@ -88,15 +87,15 @@ public class CollisionChecker{
         double distanceLimit = 20;
         // Check if the distance is within the specified limit
         if (distance < distanceLimit) {
-            //System.out.println("Player-Monstre : "+ entity.collisionPM);
 
             // Collision detected
             entity.setCollisionPM(true);
+            
         } else {
             // No collision
         	entity.setCollisionPM(false);
         }
-       
+        
     }
 	public int checkObject(Entity entity, boolean player) {
 	      int index = 999;

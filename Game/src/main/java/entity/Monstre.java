@@ -23,18 +23,13 @@ public class Monstre extends Entity {
 	int x;
 	int y;
 	//instantiate solidArea
-	Rectangle solidArea = new Rectangle();
+	public Rectangle solidArea = new Rectangle();
 	int solidAreaDefaultX;
 	int solidAreaDefaultY;
-	   /*
+	   
     
-    solidArea.x = 8;
-    solidArea.y = 16;
-    solidAreaDefaultX = solidArea.x;
-    solidAreaDefaultY = solidArea.y;
-	solidArea.width = 32;
-	solidArea.height = 32;
-*/
+   
+
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public BufferedImage Monster_icon;
 	public String direction;
@@ -48,7 +43,16 @@ public class Monstre extends Entity {
 	
 	public Monstre(GamePanel gp, TileManager tileManager) {
 		super(gp);
-	
+		
+		//instantiate solidArea
+	      this.solidArea = new Rectangle();
+	      this.solidArea.x = 8;
+	      this.solidArea.y = 16;
+	      this.solidAreaDefaultX = this.solidArea.x;
+	      this.solidAreaDefaultY = this.solidArea.y;
+		solidArea.width = 32;
+		solidArea.height = 32;
+		
 		setDefaultValues(tileManager);
 		getMonstreImage();
 		
