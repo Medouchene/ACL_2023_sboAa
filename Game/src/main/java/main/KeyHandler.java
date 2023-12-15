@@ -60,4 +60,10 @@ public class KeyHandler implements KeyListener{
 		
 	}
 
+	public boolean isAttackPressed() {
+		return attackPressed;
+	}
+
+	
+	
 }

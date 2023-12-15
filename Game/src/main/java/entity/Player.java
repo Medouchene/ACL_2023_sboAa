@@ -55,12 +55,12 @@ public class Player extends Entity{
 		
 		//instantiate solidArea
 	      this.solidArea = new Rectangle();
-	      this.solidArea.x = 8;
-	      this.solidArea.y = 16;
+	      this.solidArea.x = 12;
+	      this.solidArea.y = 20;
 	      this.solidAreaDefaultX = this.solidArea.x;
 	      this.solidAreaDefaultY = this.solidArea.y;
-		solidArea.width = 32;
-		solidArea.height = 32;
+		solidArea.width = 24;
+		solidArea.height = 24;
 		
 		setDefaultValues(tileManager);
 		getPlayerImage();

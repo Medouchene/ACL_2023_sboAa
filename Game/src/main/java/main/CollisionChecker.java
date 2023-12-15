@@ -75,28 +75,30 @@ public class CollisionChecker{
 		}
 	}
 	public void checkCollisionPM(Entity entity, Player player, Monstre monstre) {
-        // Get the position of the player and monster
-        int playerX = player.getPlayerX();
-        int playerY = player.getPlayerY();
+	    // Get the bounding rectangles for the player, entity, and monster
 
-        int monstreX = monstre.getMonstreX();
-        int monstreY = monstre.getMonstreY();
+	    Rectangle entityBounds = new Rectangle(entity.x + entity.solidArea.x, entity.y + entity.solidArea.y, entity.solidArea.width, entity.solidArea.height);
+	    Rectangle monstreBounds = new Rectangle(monstre.getMonstreX() + monstre.solidArea.x, monstre.getMonstreY() + monstre.solidArea.y, monstre.solidArea.width, monstre.solidArea.height);
 
-        // Calculate the distance between player and monster
-        double distance = Math.sqrt(Math.pow(playerX - monstreX, 2) + Math.pow(playerY - monstreY, 2));
-        double distanceLimit = 20;
-        // Check if the distance is within the specified limit
-        if (distance < distanceLimit) {
+	    // Check if the entity's bounding rectangle intersects with the monster's bounding rectangle
+	    if (entityBounds.intersects(monstreBounds)) {
+	        // Collision detected with the monster (not the player)
+	        entity.setCollisionPM(true);
+	    } else {
+	        // No collision or collision with the player
+	        entity.setCollisionPM(false);
+	    }
 
-            // Collision detected
-            entity.setCollisionPM(true);
-            
-        } else {
-            // No collision
-        	entity.setCollisionPM(false);
+	    //RUN AWAY FROM MONSTRE
+		if (gp.keyH.isAttackPressed()) {
+			entity.setCollisionPM(false);;
+	    }else if (entity.getCollisionPM() || entityBounds.intersects(monstreBounds)) {
+        	
+            entity.collisionOn = true;
         }
-        
-    }
+
+	}
+
 	public int checkObject(Entity entity, boolean player) {
 	      int index = 999;
 
