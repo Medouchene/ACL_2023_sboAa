@@ -118,7 +118,20 @@ public class Player extends Entity{
 	}
 	
 	
-	
+	public void attackMonster() {
+	    if (getCollisionPM()) {
+	        int damageDeat = 10; // Valeur Modifiable Après (4 espace pour tuer le monstre)
+	        gp.monstre.setMonsterVie(damageDeat);
+
+	        System.out.println(" Monster  Damage deat: " + damageDeat);
+	        System.out.println("Encore: " + gp.monstre.getMonsterVie());
+
+	    } else {
+	        //pas en collision avec le monstre
+	        System.out.println("No monster to attack!");
+	    }
+	}
+
 	
 	
 	
@@ -197,9 +210,7 @@ public class Player extends Entity{
 			
 		}
 
-		
 	
-		
 		//Jauge de vie
 		if (getCollisionPM()) {
 			setVie(-1);
@@ -214,6 +225,10 @@ public class Player extends Entity{
 			porteFeuille--;
 		}
 		
+		//Attack Vie
+	    if (keyH.attackPressed) {
+	        attackMonster();
+	    }
 	}
 	
 	

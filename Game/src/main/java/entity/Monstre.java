@@ -50,6 +50,8 @@ public class Monstre extends Entity {
 	      this.solidArea.y = 16;
 	      this.solidAreaDefaultX = this.solidArea.x;
 	      this.solidAreaDefaultY = this.solidArea.y;
+	      
+	      this.monsterVie=MAX_MONSTER_VIE;
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
@@ -149,6 +151,14 @@ public class Monstre extends Entity {
 				}
 				spriteCounter = 0;//reseat
 			}
+			
+			if (getCollisionPM()) {
+				setMonsterVie(-1);
+				System.out.println("Player - Monstre : "+getCollisionPM());
+
+			}
+
+			
 
 		}
 		
@@ -210,7 +220,7 @@ public class Monstre extends Entity {
 		
 		
 		
-		monsterVie = 500 ;
+		//monsterVie = 500 ;
 		int monsterHealthBarWidth = (int) ((double) monsterVie / MAX_MONSTER_VIE * 100); 
 		int monsterHealthBarX = gp.screenWidth - 110; // Same positions de la classe player 
 		int monsterHealthBarY = gp.screenHeight - 30;
@@ -232,4 +242,21 @@ public class Monstre extends Entity {
 		
 	}
 
+	
+	
+	public int getMonsterVie() {
+		return monsterVie;
+	}
+
+	public void setMonsterVie(int damage) {
+	    monsterVie -= damage;
+	    if (monsterVie < 0) {
+	        monsterVie = 0; // Pour éviter les valeurs négatives de la vie du monstre
+	    }
+	}
+
+	
+	
+	
+	
 }
