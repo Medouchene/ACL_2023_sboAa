@@ -276,14 +276,16 @@ public class Player extends Entity{
 			
 			switch(objectName) {
 			case "Key":
+				gp.playSE(2);
 				hasKey++;
 				gp.obj[i] = null;
 				break;
 			case "Door":
-				
+				gp.playSE(6);
 				//passe au next level
 				break;
 			case "Money":
+				gp.playSE(7);
 				gp.obj[i] = null;
 				porteFeuille++;
 			}

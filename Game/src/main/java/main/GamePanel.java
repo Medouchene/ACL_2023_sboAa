@@ -51,12 +51,15 @@ public class GamePanel extends JPanel implements Runnable{
 	//instantiate this KeyHandler
 	public KeyHandler keyH = new KeyHandler();
 
+	
+	
 	//instantiate CollisionChecker class
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
 	
 	public EventHandler eHandler = new EventHandler(this);
+	Sound sound = new Sound();
 	//Time
 	Thread gameThread; //Thread is something you can start and stop and once a thread started, it keeps your program running until you stop it
 	
@@ -89,7 +92,10 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	public void setupGame() {
+		
 		aSetter.setObject();
+		
+		playMusic(0);
 	}
 
 	public void startGameThread() {
@@ -97,8 +103,8 @@ public class GamePanel extends JPanel implements Runnable{
 		//instantiate this game Thread
 		gameThread = new Thread(this); // 'this' means this class, so GamePanel
 		//so basically we are passing GamePanel class to this thread's constructor that's how you instantiate a thread
-		//gameThread.start(); //it's gonna automatically call this run method
-		run();
+		gameThread.start(); //it's gonna automatically call this run method
+		//run();
 		
 	}
 	
@@ -259,5 +265,21 @@ public void run() {
 	}
     public int getTileSize() {
         return tileSize;
+    }
+    
+    public void playMusic(int i ) {
+    	
+    	sound.setFile(i);
+    	sound.play();
+    	sound.loop();
+    }
+    public void stopMusic() {
+    	
+    	sound.stop();
+    }
+    public void playSE(int i) {
+    	
+    	sound.setFile(i);
+    	sound.play();
     }
 }
