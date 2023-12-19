@@ -59,7 +59,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public UI ui = new UI(this);
 	
 	public EventHandler eHandler = new EventHandler(this);
-	Sound sound = new Sound();
+	Sound music = new Sound();
+	Sound se = new Sound();
 	//Time
 	Thread gameThread; //Thread is something you can start and stop and once a thread started, it keeps your program running until you stop it
 	
@@ -76,6 +77,8 @@ public class GamePanel extends JPanel implements Runnable{
 	int playerY = 100;
 	int playerSpeed = 4; //ie 4 pixels
 */
+	public int gameOverState = 0;
+	
 	public int dialogueState;	
 	int gameState;
 	
@@ -247,18 +250,23 @@ public void run() {
 		//convert this Graphics to Graphics2D class
 		//Graphics2D class extends the Graphics class to provide more sophisticated control over geometry, coordinate transformations, color management, and text layout
 		Graphics2D g2 =(Graphics2D)g;
-		
-		//call draw method inside of this tile manager --- tjrs lecrire avant player.draw()
-		tileM.draw(g2);
-		
-		for(int i = 0; i < this.obj.length; ++i) {
-	         if (this.obj[i] != null) {
-	            this.obj[i].draw(g2, this);
-	         }
-	      }
-		
-		player.draw(g2);
-		monstre.draw(g2);
+		if (gameOverState ==0) {
+			//call draw method inside of this tile manager --- tjrs lecrire avant player.draw()
+			tileM.draw(g2);
+			
+			for(int i = 0; i < this.obj.length; ++i) {
+		         if (this.obj[i] != null) {
+		            this.obj[i].draw(g2, this);
+		         }
+		      }
+			
+			player.draw(g2);
+			monstre.draw(g2);
+		}else if (gameOverState ==1 ) {
+			ui.drawGameOverScreen(g2);
+			stopMusic();
+			
+		}
 		
 		g2.dispose();//dispose of the graphics context and release any system resources that is using (save some memories)
 		
@@ -269,17 +277,17 @@ public void run() {
     
     public void playMusic(int i ) {
     	
-    	sound.setFile(i);
-    	sound.play();
-    	sound.loop();
+    	music.setFile(i);
+    	music.play();
+    	music.loop();
     }
     public void stopMusic() {
     	
-    	sound.stop();
+    	music.stop();
     }
     public void playSE(int i) {
     	
-    	sound.setFile(i);
-    	sound.play();
+    	se.setFile(i);
+    	se.play();
     }
 }

@@ -20,6 +20,8 @@ public class Player extends Entity{
 	KeyHandler keyH;
 	Random random = new Random();
 	
+	private boolean gameOverSoundPlayed = false;
+	
 	
 	//Jauge de vie
 	private int vie ;
@@ -218,7 +220,12 @@ public class Player extends Entity{
 
 		}
 		if (vie<=0) {
-			//GAME OVER
+			// GAME OVER
+	        if (!gameOverSoundPlayed) {
+	            gp.playSE(3);
+	            gp.gameOverState = 1;
+	            gameOverSoundPlayed = true;
+	        }
 		}
 		if (porteFeuille>0 && vie<MAX_VIE/2) {
 			setVie(1);
