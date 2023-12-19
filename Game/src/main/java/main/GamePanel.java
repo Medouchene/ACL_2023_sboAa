@@ -40,13 +40,13 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenWidth = tileSize * maxScreenCol;//768 pixels
 	public final int screenHeight = tileSize *( maxScreenRow+1);//576 pixels
 	
-	
+	private boolean Win=false;
 	
 	//FPS 
 	int FPS = 60;
 	
 	//instantiate TileManager
-	TileManager tileM = new TileManager(this);
+	public TileManager tileM = new TileManager(this);
 	
 	//instantiate this KeyHandler
 	public KeyHandler keyH = new KeyHandler();
@@ -69,6 +69,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public Entity entity = new Entity(this);
 	public Player player = new Player(this,keyH,tileM); //pass this GamePanel class and KeyHandler
 	public Monstre monstre = new Monstre(this,tileM);
+	public Monstre monstre1 = new Monstre(this,tileM);
+	public Monstre monstre2 = new Monstre(this,tileM);
 
 	public SuperObject obj[] = new SuperObject[10];
 /*	On en a plus besoin car on la defini dans la class Player
@@ -97,7 +99,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public void setupGame() {
 		
 		aSetter.setObject();
-		
+		//monstre.setDefaultValues(tileM);
+		//entity.update();
 		playMusic(0);
 	}
 
@@ -111,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	
-	void switchLevel() {
+	public void switchLevel() {
 		int currentLevel = Integer.parseInt(niveau);
 		if (currentLevel == 0) {
 			currentLevel=1;
@@ -121,6 +124,12 @@ public class GamePanel extends JPanel implements Runnable{
 			System.out.println("niveau: " + niveau);
 	        niveau = Integer.toString(currentLevel);
 	        gameThread = null;
+	        try {
+	            Thread.sleep(1000); // Pause pendant 1 seconde
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+
 	        tileM.loadMap("/maps/map0" + niveau + ".txt");
 	        
 	        setupGame();
@@ -128,9 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
 	        
 		}else if (player.playerWin()){
 	        // Player has completed all levels
-	        JOptionPane.showMessageDialog(null, "Congratulations! You have completed all levels.");
-	        
-	        resetGame();
+	        this.Win = true;
 	    }
 	}
 	void resetGame() {
@@ -184,15 +191,7 @@ public void run() {
 	}
 //		
 	}
-	/*public Integer getX0() {
-		int x0 ; int y0;
-		do{
-			x0 = random.nextInt(500);
-			y0 = random.nextInt(500);
-		} while(tileM.mapTileNum[x0][y0] != 0);
-		List<Integer> l = new ArrayList<>();
-		return x0, y0;
-	}*/
+	*/
 //"DELTA/ACCUMILATOR" METHOD	
 	public void run() {
 		
@@ -235,7 +234,11 @@ public void run() {
 		
 		
 		player.update();
+		
 		monstre.update();
+		monstre1.update();
+		monstre2.update();
+		
 		switchLevel();
 		
 		
@@ -250,9 +253,10 @@ public void run() {
 		//convert this Graphics to Graphics2D class
 		//Graphics2D class extends the Graphics class to provide more sophisticated control over geometry, coordinate transformations, color management, and text layout
 		Graphics2D g2 =(Graphics2D)g;
+		tileM.draw(g2);
 		if (gameOverState ==0) {
 			//call draw method inside of this tile manager --- tjrs lecrire avant player.draw()
-			tileM.draw(g2);
+			
 			
 			for(int i = 0; i < this.obj.length; ++i) {
 		         if (this.obj[i] != null) {
@@ -261,12 +265,41 @@ public void run() {
 		      }
 			
 			player.draw(g2);
-			monstre.draw(g2);
+			if(monstre.getMonsterVie()>0) {
+				monstre.draw(g2);
+			}
+			if(monstre1.getMonsterVie()>0) {
+				monstre1.draw(g2);
+			}
+			if(monstre2.getMonsterVie()>0) {
+				monstre2.draw(g2);
+			}
+			if (this.Win == true) {
+				ui.drawGameWinScreen(g2);
+		
+			}
 		}else if (gameOverState ==1 ) {
 			ui.drawGameOverScreen(g2);
 			stopMusic();
 			
 		}
+		
+
+		/*
+		//call draw method inside of this tile manager --- tjrs lecrire avant player.draw()
+		tileM.draw(g2);
+		
+		for(int i = 0; i < this.obj.length; ++i) {
+	         if (this.obj[i] != null) {
+	            this.obj[i].draw(g2, this);
+	         }
+	      }
+		
+		player.draw(g2);
+		
+		monstre.draw(g2);
+
+		*/
 		
 		g2.dispose();//dispose of the graphics context and release any system resources that is using (save some memories)
 		

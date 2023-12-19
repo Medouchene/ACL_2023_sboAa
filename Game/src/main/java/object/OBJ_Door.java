@@ -9,7 +9,7 @@ public class OBJ_Door extends SuperObject {
 	      this.name = "Door";
 
 	      try {
-	         this.image = ImageIO.read(this.getClass().getResourceAsStream("/objects/door.png"));
+	         this.image = ImageIO.read(this.getClass().getResourceAsStream("/objects/door0.png"));
 	      } catch (IOException e) {
 	         e.printStackTrace();
 	      }

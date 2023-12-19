@@ -27,6 +27,13 @@ public class UI {
 		g2.drawString("Game Over", gp.screenWidth / 2 - 100, gp.screenHeight / 2 - 20);
 		
 	}
+	public void drawGameWinScreen(Graphics2D g2){
+		
+		g2.setFont(arial_40);
+		g2.setColor(Color.white);
+		g2.drawString("Congratulation, you did it !", gp.screenWidth / 2 - 100, gp.screenHeight / 2 - 20);
+		
+	}
 	
 
 }

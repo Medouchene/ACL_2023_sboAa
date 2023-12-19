@@ -121,12 +121,18 @@ public class Player extends Entity{
 	
 	
 	public void attackMonster() {
-	    if (getCollisionPM()) {
-	        int damageDeat = 10; // Valeur Modifiable Après (4 espace pour tuer le monstre)
+		int damageDeat = 500;
+	    if (gp.monstre.getCollisionPM() ) {
+	         System.out.println("attaq 1");
 	        gp.monstre.setMonsterVie(damageDeat);
 
-	        System.out.println(" Monster  Damage deat: " + damageDeat);
-	        System.out.println("Encore: " + gp.monstre.getMonsterVie());
+	    }else if (gp.monstre1.getCollisionPM() ) {
+	    	System.out.println("attaq 2");
+	        gp.monstre1.setMonsterVie(damageDeat);
+
+	    }else if (gp.monstre2.getCollisionPM() ) {
+	    	System.out.println("attaq 3");
+	        gp.monstre2.setMonsterVie(damageDeat);
 
 	    } else {
 	        //pas en collision avec le monstre
@@ -172,9 +178,11 @@ public class Player extends Entity{
 			
 			//CHECK COLLISION
 			collisionOn = false;
-			collisionPM = false;
+			
 			gp.cChecker.checkTile(this);
 			gp.cChecker.checkCollisionPM(this, gp.player, gp.monstre);
+			gp.cChecker.checkCollisionPM(this, gp.player, gp.monstre1);
+			gp.cChecker.checkCollisionPM(this, gp.player, gp.monstre2);
 			
 			//CHECK EVENT
 			gp.eHandler.checkEvent();
@@ -214,11 +222,10 @@ public class Player extends Entity{
 
 	
 		//Jauge de vie
-		if (getCollisionPM()) {
+		if (gp.monstre.getCollisionPM() || gp.monstre1.getCollisionPM()  || gp.monstre2.getCollisionPM() ) {
 			setVie(-1);
-			System.out.println("Player - Monstre : "+getCollisionPM());
-
 		}
+
 		if (vie<=0) {
 			// GAME OVER
 	        if (!gameOverSoundPlayed) {
@@ -290,6 +297,7 @@ public class Player extends Entity{
 			case "Door":
 				gp.playSE(6);
 				//passe au next level
+				
 				break;
 			case "Money":
 				gp.playSE(7);

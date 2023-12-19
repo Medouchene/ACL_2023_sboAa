@@ -9,7 +9,6 @@ import main.GamePanel;
 
 public class Entity {
 	GamePanel gp;
-	Monstre monstre;
 	public Entity(GamePanel gp) {
 		// TODO Auto-generated constructor stub
 		this.gp = gp;
@@ -32,18 +31,19 @@ public class Entity {
 	   public int solidAreaDefaultX;
 	   public int solidAreaDefaultY;
 	public boolean collisionOn = false;
-	boolean collisionPM;
+	
 	public int getPlayerX() {
 		return x;
 	}
 	public int getPlayerY() {
 		return y;
 	}
-	public boolean getCollisionPM() {
-		return collisionPM;
-	}
-	public void setCollisionPM(boolean collisionPM) {
-		this.collisionPM = collisionPM;
-	}
 	
+	
+	
+	public void update() {
+		gp.monstre.setDefaultValues(gp.tileM);
+		gp.player.update();
+		gp.monstre.update();
+	}
 }

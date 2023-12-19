@@ -83,16 +83,16 @@ public class CollisionChecker{
 	    // Check if the entity's bounding rectangle intersects with the monster's bounding rectangle
 	    if (entityBounds.intersects(monstreBounds)) {
 	        // Collision detected with the monster (not the player)
-	        entity.setCollisionPM(true);
+	        monstre.setCollisionPM(true);
 	    } else {
 	        // No collision or collision with the player
-	        entity.setCollisionPM(false);
+	        monstre.setCollisionPM(false);
 	    }
 
 	    //RUN AWAY FROM MONSTRE
 		if (gp.keyH.isAttackPressed()) {
-			entity.setCollisionPM(false);;
-	    }else if (entity.getCollisionPM() || entityBounds.intersects(monstreBounds)) {
+			monstre.setCollisionPM(false);;
+	    }else if (monstre.getCollisionPM() || entityBounds.intersects(monstreBounds)) {
         	
             entity.collisionOn = true;
         }

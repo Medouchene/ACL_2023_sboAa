@@ -39,11 +39,20 @@ public class Monstre extends Entity {
 	
 	private int monsterVie ;
 	private final int MAX_MONSTER_VIE=500;
-
+    
+	private boolean collisionPM;
 	
+	public boolean getCollisionPM() {
+		return collisionPM;
+	}
+
+	public void setCollisionPM(boolean collisionPM) {
+		this.collisionPM = collisionPM;
+	}
+
 	public Monstre(GamePanel gp, TileManager tileManager) {
 		super(gp);
-		
+		this.monsterVie=MAX_MONSTER_VIE;
 		//instantiate solidArea
 	      this.solidArea = new Rectangle();
 	      this.solidArea.x = 8;
@@ -51,7 +60,7 @@ public class Monstre extends Entity {
 	      this.solidAreaDefaultX = this.solidArea.x;
 	      this.solidAreaDefaultY = this.solidArea.y;
 	      
-	      this.monsterVie=MAX_MONSTER_VIE;
+	      
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
@@ -179,7 +188,7 @@ public class Monstre extends Entity {
 		
 //		g2.setColor(Color.white);
 //		g2.fillRect(x, y, gp.tileSize, gp.tileSize);// fillRect(x, y, width, height) draw a rectangle and fills it with the specified color
-	
+		
 		BufferedImage image = null;
 		
 		switch(direction) {
@@ -224,7 +233,7 @@ public class Monstre extends Entity {
 		int monsterHealthBarWidth = (int) ((double) monsterVie / MAX_MONSTER_VIE * 100); 
 		int monsterHealthBarX = gp.screenWidth - 110; // Same positions de la classe player 
 		int monsterHealthBarY = gp.screenHeight - 30;
-		
+		/*
 		//barre de vie du monstre
 		g2.setColor(Color.BLACK);
 		g2.fillRoundRect(monsterHealthBarX, monsterHealthBarY, 100, 20, 10, 10);
@@ -232,12 +241,14 @@ public class Monstre extends Entity {
 		GradientPaint monsterGradient = new GradientPaint(0, 0, Color.RED, monsterHealthBarWidth, 0, Color.GREEN);
 		g2.setPaint(monsterGradient);
 		g2.fillRoundRect(monsterHealthBarX + 2, monsterHealthBarY + 2, monsterHealthBarWidth - 4, 16, 8, 8);
-
+*/
 		int monsterIconX = gp.screenWidth - 160; // Same as player icon
 		int monsterIconY = gp.screenHeight - 40; 
 		int monsterIconSize = 30;
-
+		
 		g2.drawImage(Monster_icon, monsterIconX, monsterIconY, monsterIconSize, monsterIconSize, null);
+		g2.drawImage(Monster_icon, monsterIconX+40, monsterIconY, monsterIconSize, monsterIconSize, null);
+		g2.drawImage(Monster_icon, monsterIconX+80, monsterIconY, monsterIconSize, monsterIconSize, null);
 		
 		
 	}
@@ -254,7 +265,10 @@ public class Monstre extends Entity {
 	        monsterVie = 0; // Pour éviter les valeurs négatives de la vie du monstre
 	    }
 	}
-
+	
+	public void setMonsterVieMax() {
+		this.monsterVie = this.MAX_MONSTER_VIE;
+	}
 	
 	
 	

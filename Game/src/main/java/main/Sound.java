@@ -2,6 +2,7 @@ package main;
 
 import java.net.URL;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -10,7 +11,7 @@ public class Sound {
 
 	Clip clip; //use this to import audio file
 	URL soundURL[] = new URL[30];//to store the file path of these sound files
-	
+
 	public Sound() {
 		
 		soundURL[0]= getClass().getResource("/soud/BlueBoyAdventure.wav");
@@ -24,24 +25,34 @@ public class Sound {
 	}
 	
 	public void setFile(int i) {
-		
-		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
-			clip = AudioSystem.getClip();
-			clip.open(ais);
-			
-		}catch(Exception e) {
-			e.printStackTrace();
+	    try (AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i])) {
+	        AudioFormat format = ais.getFormat();
+	        System.out.println("Audio Format: " + format);
+
+	        clip = AudioSystem.getClip();
+	        clip.open(ais);
+	    } catch (Exception e) {
+	        e.printStackTrace();
 	        System.out.println("Erreur lors de l'ouverture du fichier audio.");
-		}
+	    }
 	}
-	public void play() {
-		clip.start();
-	}
-	public void loop() {
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
-	}
-	public void stop() {
-		clip.stop();
-	}
+
+
+    public void play() {
+        if (clip != null) {
+            clip.start();
+        }
+    }
+
+    public void loop() {
+        if (clip != null) {
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
+    public void stop() {
+        if (clip != null) {
+            clip.stop();
+        }
+    }
 }
