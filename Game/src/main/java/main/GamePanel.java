@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
 	private boolean Win=false;
 	
 	//FPS 
-	int FPS = 60;
+	int FPS;
 	
 	//instantiate TileManager
 	public TileManager tileM = new TileManager(this);
@@ -97,11 +97,14 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	public void setupGame() {
-		
+		FPS = 60;
 		aSetter.setObject();
+		monstre.setMonsterVieMax();
+		monstre1.setMonsterVieMax();
+		monstre2.setMonsterVieMax();
 		//monstre.setDefaultValues(tileM);
 		//entity.update();
-		playMusic(0);
+		
 	}
 
 	public void startGameThread() {
@@ -111,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable{
 		//so basically we are passing GamePanel class to this thread's constructor that's how you instantiate a thread
 		gameThread.start(); //it's gonna automatically call this run method
 		//run();
-		
+		playMusic(0);
 	}
 	
 	public void switchLevel() {
@@ -123,17 +126,12 @@ public class GamePanel extends JPanel implements Runnable{
 			currentLevel++;
 			System.out.println("niveau: " + niveau);
 	        niveau = Integer.toString(currentLevel);
-	        gameThread = null;
-	        try {
-	            Thread.sleep(1000); // Pause pendant 1 seconde
-	        } catch (InterruptedException e) {
-	            e.printStackTrace();
-	        }
+	        
 
 	        tileM.loadMap("/maps/map0" + niveau + ".txt");
 	        
 	        setupGame();
-	        startGameThread();
+	      
 	        
 		}else if (player.playerWin()){
 	        // Player has completed all levels
@@ -194,40 +192,42 @@ public void run() {
 	*/
 //"DELTA/ACCUMILATOR" METHOD	
 	public void run() {
-		
-		double drawInterval = 1000000000/FPS;
-		double delta = 0;
-		long lastTime = System.nanoTime();
-		long currentTime;
-		//display FPS
-		long timer = 0;
-		int drawCount = 0;
-		
-		while(gameThread != null) {
-			
-			currentTime = System.nanoTime();
-			
-			delta += (currentTime - lastTime) / drawInterval; // =(how much time has passed)/drawInterval
-			timer += (currentTime - lastTime);
-			lastTime = currentTime;
-			
-			//when delta reach this drawInterval ie 1, why update, repaint and reset this delta
-			if(delta >= 1) {
-				
-				update();
-				repaint();
-				delta--;
-				drawCount++;//increase by 1
-			}
-			
-			if(timer >= 1000000000) {
-				//System.out.println("FPS: "+drawCount);
-				drawCount = 0;
-				timer = 0;
-			}
-			
-		}
+	    // Initialisation des variables de temps
+	    double drawInterval = 1000000000.0 / FPS;
+	    double delta = 0;
+	    long lastTime = System.nanoTime();
+	    long currentTime;
+
+	    // Variables pour afficher les FPS
+	    long timer = 0;
+	    int drawCount = 0;
+
+	    while (gameThread != null) {
+	        currentTime = System.nanoTime();
+
+	        // Calcul du temps écoulé depuis la dernière mise à jour
+	        delta += (currentTime - lastTime) / drawInterval;
+	        timer += (currentTime - lastTime);
+	        lastTime = currentTime;
+
+	        // Mise à jour à une fréquence constante
+	        if (delta >= 1) {
+	            update();
+	            repaint();
+	            delta--;
+	            drawCount++;
+	        }
+
+	        // Affichage des FPS chaque seconde
+	        if (timer >= 1000000000) {
+	            System.out.println("FPS: " );
+	            drawCount = 0;
+	            timer = 0;
+	        }
+	    }
 	}
+
+	
 
 	
 	public void update() {

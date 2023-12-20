@@ -40,10 +40,5 @@ public class Entity {
 	}
 	
 	
-	
-	public void update() {
-		gp.monstre.setDefaultValues(gp.tileM);
-		gp.player.update();
-		gp.monstre.update();
-	}
+
 }

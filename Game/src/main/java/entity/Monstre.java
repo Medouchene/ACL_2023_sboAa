@@ -31,13 +31,13 @@ public class Monstre extends Entity {
    
 
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-	public BufferedImage Monster_icon;
+	public BufferedImage Monster_icon, died;
 	public String direction;
 	
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
 	
-	private int monsterVie ;
+	public int monsterVie ;
 	private final int MAX_MONSTER_VIE=500;
     
 	private boolean collisionPM;
@@ -95,6 +95,7 @@ public class Monstre extends Entity {
 			
 			Monster_icon=ImageIO.read(getClass().getResourceAsStream("/monster/Monster_icon.png"));
 			
+			died = ImageIO.read(getClass().getResourceAsStream("/monster/died.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -150,6 +151,11 @@ public class Monstre extends Entity {
 				// Ensure the monster stays within the bounds of the game panel
 			    x = Math.max(gp.tileSize, Math.min(x, gp.getWidth() - 2*gp.tileSize));
 			    y = Math.max(gp.tileSize, Math.min(y, gp.getHeight() - 3*gp.tileSize));
+			    
+			    if(this.monsterVie<=0) {
+			    	x=0;
+			    	y=0;
+			    }
 			//create a simple sprite changer
 			spriteCounter++;
 			if(spriteCounter > 12) { //means the player image changes in every 12 frames
@@ -160,13 +166,13 @@ public class Monstre extends Entity {
 				}
 				spriteCounter = 0;//reseat
 			}
-			
+			/*
 			if (getCollisionPM()) {
-				setMonsterVie(-1);
+				setMonsterVie(this.MAX_MONSTER_VIE/2);
 				System.out.println("Player - Monstre : "+getCollisionPM());
 
 			}
-
+*/
 			
 
 		}
@@ -190,41 +196,44 @@ public class Monstre extends Entity {
 //		g2.fillRect(x, y, gp.tileSize, gp.tileSize);// fillRect(x, y, width, height) draw a rectangle and fills it with the specified color
 		
 		BufferedImage image = null;
+
+			switch(direction) {
+			case "up":
+				if(spriteNum == 1) {
+					image = up1;
+				}
+				if(spriteNum == 2) {
+					image = up2;
+				}
+				break;
+			case "down":
+				if(spriteNum == 1) {
+					image = down1;
+				}
+				if(spriteNum == 2) {
+					image = down2;
+				}
+				break;
+			case "left":
+				if(spriteNum == 1) {
+					image = left1;
+				}
+				if(spriteNum == 2) {
+					image = left2;
+				}
+				break;
+			case "right":
+				if(spriteNum == 1) {
+					image = right1;
+				}
+				if(spriteNum == 2) {
+					image = right2;
+				}
+				break;
+			} 
+			
 		
-		switch(direction) {
-		case "up":
-			if(spriteNum == 1) {
-				image = up1;
-			}
-			if(spriteNum == 2) {
-				image = up2;
-			}
-			break;
-		case "down":
-			if(spriteNum == 1) {
-				image = down1;
-			}
-			if(spriteNum == 2) {
-				image = down2;
-			}
-			break;
-		case "left":
-			if(spriteNum == 1) {
-				image = left1;
-			}
-			if(spriteNum == 2) {
-				image = left2;
-			}
-			break;
-		case "right":
-			if(spriteNum == 1) {
-				image = right1;
-			}
-			if(spriteNum == 2) {
-				image = right2;
-			}
-			break;
-		}
+		
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);//Draw an image on the screen
 		
 		
@@ -255,6 +264,22 @@ public class Monstre extends Entity {
 
 	
 	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	public int getMonsterVie() {
 		return monsterVie;
 	}

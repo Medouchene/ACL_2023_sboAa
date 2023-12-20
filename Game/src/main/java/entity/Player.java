@@ -121,23 +121,7 @@ public class Player extends Entity{
 	
 	
 	public void attackMonster() {
-		int damageDeat = 500;
-	    if (gp.monstre.getCollisionPM() ) {
-	         System.out.println("attaq 1");
-	        gp.monstre.setMonsterVie(damageDeat);
-
-	    }else if (gp.monstre1.getCollisionPM() ) {
-	    	System.out.println("attaq 2");
-	        gp.monstre1.setMonsterVie(damageDeat);
-
-	    }else if (gp.monstre2.getCollisionPM() ) {
-	    	System.out.println("attaq 3");
-	        gp.monstre2.setMonsterVie(damageDeat);
-
-	    } else {
-	        //pas en collision avec le monstre
-	        System.out.println("No monster to attack!");
-	    }
+		
 	}
 
 	
@@ -229,7 +213,7 @@ public class Player extends Entity{
 		if (vie<=0) {
 			// GAME OVER
 	        if (!gameOverSoundPlayed) {
-	            gp.playSE(3);
+	            //gp.playSE(3);
 	            gp.gameOverState = 1;
 	            gameOverSoundPlayed = true;
 	        }
@@ -241,7 +225,24 @@ public class Player extends Entity{
 		
 		//Attack Vie
 	    if (keyH.attackPressed) {
-	        attackMonster();
+	    	int damageDeat = 500/2;
+		    if (gp.monstre.getCollisionPM() ) {
+		         System.out.println("attaq 1   "+gp.monstre.monsterVie);
+		        gp.monstre.setMonsterVie(damageDeat);
+		     
+
+		    }else if (gp.monstre1.getCollisionPM() ) {
+		    	System.out.println("attaq 2  "+gp.monstre1.monsterVie);
+		        gp.monstre1.setMonsterVie(damageDeat);
+
+		    }else if (gp.monstre2.getCollisionPM() ) {
+		    	System.out.println("attaq 3   "+gp.monstre2.monsterVie);
+		        gp.monstre2.setMonsterVie(damageDeat);
+
+		    } else {
+		        //pas en collision avec le monstre
+		        System.out.println("No monster to attack!");
+		    }
 	    }
 	}
 	
