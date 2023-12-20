@@ -166,13 +166,6 @@ public class Monstre extends Entity {
 				}
 				spriteCounter = 0;//reseat
 			}
-			/*
-			if (getCollisionPM()) {
-				setMonsterVie(this.MAX_MONSTER_VIE/2);
-				System.out.println("Player - Monstre : "+getCollisionPM());
-
-			}
-*/
 			
 
 		}
@@ -192,8 +185,6 @@ public class Monstre extends Entity {
 
 	public void draw(Graphics2D g2) {
 		
-//		g2.setColor(Color.white);
-//		g2.fillRect(x, y, gp.tileSize, gp.tileSize);// fillRect(x, y, width, height) draw a rectangle and fills it with the specified color
 		
 		BufferedImage image = null;
 
@@ -235,31 +226,7 @@ public class Monstre extends Entity {
 		
 		
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);//Draw an image on the screen
-		
-		
-		
-		//monsterVie = 500 ;
-		int monsterHealthBarWidth = (int) ((double) monsterVie / MAX_MONSTER_VIE * 100); 
-		int monsterHealthBarX = gp.screenWidth - 110; // Same positions de la classe player 
-		int monsterHealthBarY = gp.screenHeight - 30;
-		/*
-		//barre de vie du monstre
-		g2.setColor(Color.BLACK);
-		g2.fillRoundRect(monsterHealthBarX, monsterHealthBarY, 100, 20, 10, 10);
 
-		GradientPaint monsterGradient = new GradientPaint(0, 0, Color.RED, monsterHealthBarWidth, 0, Color.GREEN);
-		g2.setPaint(monsterGradient);
-		g2.fillRoundRect(monsterHealthBarX + 2, monsterHealthBarY + 2, monsterHealthBarWidth - 4, 16, 8, 8);
-*/
-		int monsterIconX = gp.screenWidth - 160; // Same as player icon
-		int monsterIconY = gp.screenHeight - 40; 
-		int monsterIconSize = 30;
-		
-		g2.drawImage(Monster_icon, monsterIconX, monsterIconY, monsterIconSize, monsterIconSize, null);
-		g2.drawImage(Monster_icon, monsterIconX+40, monsterIconY, monsterIconSize, monsterIconSize, null);
-		g2.drawImage(Monster_icon, monsterIconX+80, monsterIconY, monsterIconSize, monsterIconSize, null);
-		
-		
 	}
 
 	

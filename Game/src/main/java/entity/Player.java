@@ -206,7 +206,7 @@ public class Player extends Entity{
 
 	
 		//Jauge de vie
-		if (gp.monstre.getCollisionPM() || gp.monstre1.getCollisionPM()  || gp.monstre2.getCollisionPM() ) {
+		if (gp.monstre.getCollisionPM() || gp.monstre1.getCollisionPM()  || gp.monstre2.getCollisionPM() || collision4) {
 			setVie(-1);
 		}
 

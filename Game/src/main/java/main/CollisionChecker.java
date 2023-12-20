@@ -33,7 +33,7 @@ public class CollisionChecker{
 		int entityBottomRow = entityBottomWorldY/gp.tileSize;
 		
 		
-		int tileNum1, tileNum2;
+		int tileNum1=-99, tileNum2=-99;
 		
 		switch(entity.direction) {
 		case "up":
@@ -72,6 +72,11 @@ public class CollisionChecker{
 			}
 			break;
 			
+		}
+		if (tileNum1 == 4 || tileNum2 == 4) {
+			entity.collision4 = true;
+		}else {
+			entity.collision4 = false;
 		}
 	}
 	public void checkCollisionPM(Entity entity, Player player, Monstre monstre) {

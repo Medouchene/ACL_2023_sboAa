@@ -62,6 +62,7 @@ public class TileManager {
 			tile[4] = new Tile();
 			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile0.png"));
 			tile[4].collision = true;
+			
 
 			
 			tile[5] = new Tile();
@@ -126,12 +127,6 @@ public class TileManager {
 	
 	public void draw(Graphics2D g2) {
 
-		/*
-		// draw a tile for testing
-		g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
-		g2.drawImage(tile[1].image, 48, 0, gp.tileSize, gp.tileSize, null);//decale dun tile = 48
-		g2.drawImage(tile[2].image, 96, 0, gp.tileSize, gp.tileSize, null);
-		*/
 		
 		//automating the tile drawing proces
 		int col = 0;

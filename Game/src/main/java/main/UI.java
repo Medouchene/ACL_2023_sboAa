@@ -31,7 +31,7 @@ public class UI {
 		
 		g2.setFont(arial_40);
 		g2.setColor(Color.white);
-		g2.drawString("Congratulation, you did it !", gp.screenWidth / 2 - 100, gp.screenHeight / 2 - 20);
+		g2.drawString("Congratulation", gp.screenWidth / 2 - 100, gp.screenHeight / 2 - 20);
 		
 	}
 	

@@ -1,5 +1,5 @@
 package main;
-
+ 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -102,9 +102,8 @@ public class GamePanel extends JPanel implements Runnable{
 		monstre.setMonsterVieMax();
 		monstre1.setMonsterVieMax();
 		monstre2.setMonsterVieMax();
-		//monstre.setDefaultValues(tileM);
-		//entity.update();
-		
+		monstre.setDefaultValues(tileM);
+
 	}
 
 	public void startGameThread() {
@@ -136,6 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
 		}else if (player.playerWin()){
 	        // Player has completed all levels
 	        this.Win = true;
+	        resetGame();
 	    }
 	}
 	void resetGame() {
@@ -145,51 +145,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    gameThread = null;
 	}
 
-	
-	//when we start this gameThread it automatically calls this run method
-//"SLEEP" METHOD
-	/*
-public void run() {
-//		
-//		//'sleep' method
-		double drawInterval = 1000000000/FPS; // =1billionnanoseconds/FPS=16 666 666 or 1s/60 = 0.01666 seconds
-		double nextDrawTime = System.nanoTime() + drawInterval;
-//		
-//		//create a game loop, will be the core of the game
-		while(gameThread != null) {
-//			
-//			//check the current time
-			long currentTime = System.nanoTime();//returns the current value of the running Java Virtual Machine's high-resolution time source, in nanoseconds, 1 000 000 000 nanoseconds = 1 second
-			System.out.println("current Time : " +currentTime);
-			long currentTime2 = System.currentTimeMillis();//in milliseconds 1 000 milliseconds = 1 second --> moins précis
-//			
-			System.out.println("The game loop is running");
-//			// 1 UPDATE : update information such as character positions
-			update();
-//	
-//			// 2 DRAW : draw the screen with the updated information
-			repaint();
-//			
-			try {
-				double remainingTime = nextDrawTime - System.nanoTime();
-			remainingTime = remainingTime/1000000;//in milliseconds
-				
-				if(remainingTime < 0) {
-					remainingTime = 0;
-			}
-//				
-				Thread.sleep((long)remainingTime);//pause the game loop until the sleep time is over
-//				
-			nextDrawTime += drawInterval;
-//				
-		} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-//		
-	}
-	*/
+
 //"DELTA/ACCUMILATOR" METHOD	
 	public void run() {
 	    // Initialisation des variables de temps
@@ -246,6 +202,9 @@ public void run() {
 
 	public void paintComponent(Graphics g) {
 		//built-in method in Java, standard method to draw things on Jpanel
+		int monsterIconX = screenWidth - 160; // Same as player icon
+		int monsterIconY = screenHeight - 40; 
+		int monsterIconSize = 30;
 		
 		//Graphics is a class that has many functions to draw objects on the screen
 		super.paintComponent(g);//a format you need to write when using paintComponent, super refers to JPanel
@@ -267,12 +226,15 @@ public void run() {
 			player.draw(g2);
 			if(monstre.getMonsterVie()>0) {
 				monstre.draw(g2);
+				g2.drawImage(monstre.Monster_icon, monsterIconX, monsterIconY, monsterIconSize, monsterIconSize, null);
 			}
 			if(monstre1.getMonsterVie()>0) {
 				monstre1.draw(g2);
+				g2.drawImage(monstre.Monster_icon, monsterIconX+40, monsterIconY, monsterIconSize, monsterIconSize, null);
 			}
 			if(monstre2.getMonsterVie()>0) {
 				monstre2.draw(g2);
+				g2.drawImage(monstre.Monster_icon, monsterIconX+80, monsterIconY, monsterIconSize, monsterIconSize, null);
 			}
 			if (this.Win == true) {
 				ui.drawGameWinScreen(g2);
@@ -284,22 +246,6 @@ public void run() {
 			
 		}
 		
-
-		/*
-		//call draw method inside of this tile manager --- tjrs lecrire avant player.draw()
-		tileM.draw(g2);
-		
-		for(int i = 0; i < this.obj.length; ++i) {
-	         if (this.obj[i] != null) {
-	            this.obj[i].draw(g2, this);
-	         }
-	      }
-		
-		player.draw(g2);
-		
-		monstre.draw(g2);
-
-		*/
 		
 		g2.dispose();//dispose of the graphics context and release any system resources that is using (save some memories)
 		
