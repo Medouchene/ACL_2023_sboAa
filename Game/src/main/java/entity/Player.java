@@ -253,18 +253,17 @@ public class Player extends Entity{
 	}
 
 	public void setVie(int a) {
-		if (a==-1) {
-			double reduction = 0.1 ;
-			double redutctionAmount = (MAX_VIE*reduction)/100.0;
-			vie-=redutctionAmount;
-		}else if (a==1) {
-			
-			vie+=MAX_VIE/2;
-		}
-		//System.out.println("   key act est " + hasKey);
-		//System.out.println("   Wallet act est " + porteFeuille);
-		
+	    if (a == -1) {
+	        double reduction = 0.1;
+	        double redutctionAmount = (MAX_VIE * reduction) / 100.0;
+	        vie -= 2*redutctionAmount;
+	    } else if (a == 1) {
+	        vie += MAX_VIE / 2;
+	    }
 	}
+
+	
+	
 	public boolean playerWin() {
 		int playerX = this.x;
 		int playerY = this.y;
