@@ -123,17 +123,18 @@ public class Monstre extends Entity {
 			    y += yDirection * speed;
 */
 			
-			int i = rand.nextInt(1000000);
-			//we change the monstre position here
-			if (i < 50000 && i > 950000) {
-		        direction = "up";
-		    } else if (i >= 100000 && i < 200000) {
-		        direction = "down";
-		    } else if (i >= 300000 && i < 350000) {
-		        direction = "left";
-		    } else if (i >= 650000 && i < 700000) {
-		        direction = "right";
-		    }
+		int i = rand.nextInt(10000000);
+
+		if ((i < 15000 && i> 9500) || (i >= 50000 && i<60000)) {
+		    direction = "up";
+		} else if ((i >= 25000 && i < 30000) || (i<90000 && i>950000)) {
+		    direction = "down";
+		} else if ((i >= 65000 && i < 75000) || (i<200000 && i>250000)) {
+		    direction = "left";
+		} else if((i>80000 && i<90000) || (i>40000 && i<50000)){
+		    direction = "right";
+		}
+
 			
 
 			

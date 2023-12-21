@@ -225,19 +225,26 @@ public class Player extends Entity{
 		
 		//Attack Vie
 	    if (keyH.attackPressed) {
-	    	int damageDeat = 500/2;
+	    	int damageDeat;
+	    	
 		    if (gp.monstre.getCollisionPM() ) {
+		    	damageDeat = 500/2;
 		         System.out.println("attaq 1   "+gp.monstre.monsterVie);
 		        gp.monstre.setMonsterVie(damageDeat);
+		        //gp.playSE(4);
 		     
 
 		    }else if (gp.monstre1.getCollisionPM() ) {
+		    	damageDeat = 500/3;
 		    	System.out.println("attaq 2  "+gp.monstre1.monsterVie);
 		        gp.monstre1.setMonsterVie(damageDeat);
+		        //gp.playSE(4);
 
 		    }else if (gp.monstre2.getCollisionPM() ) {
+		    	damageDeat = 500/4;
 		    	System.out.println("attaq 3   "+gp.monstre2.monsterVie);
 		        gp.monstre2.setMonsterVie(damageDeat);
+		        //gp.playSE(4);
 
 		    } else {
 		        //pas en collision avec le monstre
